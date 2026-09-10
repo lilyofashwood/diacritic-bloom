@@ -1,0 +1,19 @@
+{
+  "README.md": "f80b3af660b052fe6cb63eb8505a5b243871b571891792dc1a4643e729ab791c",
+  "SPEC.md": "e4f4824863f4526f29fdccd5bb39a1678b26fdcbe217cc320832ab967329e9fa",
+  "TESTING.md": "a2ba0600e1e0d7c5e3dcc81477a75746e1e806789220af8ba1d2b00038905545",
+  "bloom.mjs": "54690758fa3c99fceb3be2724474a9363e7e7df83461fd8660c121eab585ec75",
+  "bloom.test.mjs": "190cae737ffefd9d9b63a8b03a3a9dcd2564cb8b350f85991e48f4e82d3e5b5e",
+  "browser.test.py": "c82b16fa6a510c622eb18ab32fcf10a39fadd0c526cd0330108d136e5da99d39",
+  "build.mjs": "d9d7f6067c756eacae50d75d17b5399415ca6be05da0ff812ffa8da828bdab68",
+  "cli.mjs": "c21f85bf03a81cb06061034c12c9be1a4b3844c79487b3eb7a5136619fc003e8",
+  "diacritic-bloom.html": "61fede9df461def8607dc0414050581c0ddce4d67b395c1959492f42740017bb",
+  "original-recipe.json": "a3c313cdf042c79ab517e582888c0b0c9585bc63bf6542ada840ce279492a30a",
+  "original-specimen.txt": "7b4677a2396b698be1de2eff22a3b39325602a560b9ae601b9f1ffd6fbc84e89",
+  "specimen-clusters.json": "27a7612eeffbe587b7da3f64b96996d52cecd1f81446e0a384bb9ab41f27ed6d",
+  "src/core.js": "4c1a3e3214b20c112deac2723bd6112772925dd94c252f9b1d3d4a5a7dc7355c",
+  "src/page.html": "0cae3eeaae00eeea6b5c3108bf6b0b1a6024e10027425fbe4c6ae2aafb8c7757",
+  "src/ui.js": "71321c0629ef11e659bf0e5a8ed9fac3699f66adf48be96de2666c2b1c92dfb7",
+  "tables.json": "ace92bf78a28e922c29976648a1c4cc60485add7c00447374ae40d4633f360ff",
+  "test-vectors.json": "e12cb1513cfe7d531bbdd3d18be7bcc8e898fa8b13aa48fd701c05ae6642989e"
+}

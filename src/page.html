@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Diacritic Bloom · Unicode workshop</title>
+<style>
+:root{--bg:#100e19;--panel:#1b1727;--panel2:#211c30;--edge:#41364f;--ink:#f3edf9;--muted:#b8aec7;--pink:#f6a7d8;--lilac:#cab2ff;--mint:#a0e5ce;--math:'STIX Two Math','Cambria Math','Noto Sans Math','DejaVu Sans',serif}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#30203c 0,transparent 43%),radial-gradient(ellipse at 95% 35%,#172b2a 0,transparent 38%),var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+a{color:var(--mint);text-underline-offset:4px}button,input,select,textarea{font:inherit}button{cursor:pointer}button,input,select,textarea{border:1px solid var(--edge);border-radius:10px}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--mint);outline-offset:3px}button{background:#32273f;color:var(--ink);padding:10px 15px;min-height:44px;transition:background .15s}button:hover{background:#44334f}button.primary{background:var(--lilac);color:#21152f;font-weight:700;border-color:var(--lilac)}button:disabled{opacity:.55;cursor:not-allowed}input,select,textarea{width:100%;background:#110f1b;color:var(--ink);padding:11px 12px}textarea{resize:vertical;min-height:120px;line-height:1.8;font-size:16px}input[type=checkbox]{width:18px;height:18px;accent-color:var(--lilac);flex-shrink:0}input[type=range]{padding:0;accent-color:var(--pink);height:28px;border:0}select{min-height:46px}label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}h1,h2,h3,p{margin-top:0}h2{font-size:17px;letter-spacing:.02em;margin-bottom:14px}h3{font-size:14px}p:last-child{margin-bottom:0}small,.hint{font-size:12px;color:var(--muted)}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.9em}main{max-width:1180px;padding:32px 26px 70px;margin:auto}.mast{display:flex;align-items:center;justify-content:space-between;gap:16px}.eyebrow{font:11px/1.5 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}.pill{border:1px solid var(--edge);border-radius:30px;padding:7px 12px;color:var(--muted);font-size:12px}.hero{padding:26px 0 28px;position:relative}.hero h1{font-family:var(--math);font-size:clamp(37px,6vw,66px);font-weight:400;line-height:1.65;letter-spacing:-.02em;margin:0}.hero p{max-width:720px;color:var(--muted);font-size:16px;margin:3px 0 16px}.hero .cat{position:absolute;right:10px;bottom:15px;text-align:center;color:var(--pink);font:17px/1.35 var(--math)}.divider{letter-spacing:.27em;color:#827191;font-family:var(--math);overflow:hidden;white-space:nowrap}.grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:18px;grid-template-areas:'source controls' 'preview controls' 'decoder microscope' 'spec spec'}.panel{border:1px solid var(--edge);border-radius:18px;background:linear-gradient(130deg,#211b2d,#191620);padding:22px;min-width:0}.source{grid-area:source}.controls{grid-area:controls}.preview{grid-area:preview;overflow:hidden}.decoder{grid-area:decoder}.microscope{grid-area:microscope}.spec{grid-area:spec}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.panel-head h2{margin-bottom:0}.panel-head{margin-bottom:14px}.panel-index{color:var(--pink);margin-right:8px;font-family:ui-monospace,monospace}.row{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:12px}.row.tight{margin-top:6px}.stack{display:grid;gap:16px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.check{display:flex;align-items:center;gap:9px;color:var(--ink);font-size:13px}.meters{margin:20px 0}.meter{margin:13px 0}.meter label{display:flex;align-items:center;justify-content:space-between}.meter output{color:var(--pink);font-family:ui-monospace,monospace;font-size:14px}.profiles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:18px}.profiles button{padding:8px 3px;font-size:12px}.muted-rule{border:0;border-top:1px solid var(--edge);margin:20px 0}.bloom-display{font-family:var(--math);font-size:29px;line-height:2.35;white-space:pre-wrap;overflow-wrap:anywhere;padding:37px 10px;min-height:182px;color:#f6d4ef}.bloom-display.plain{font:18px/1.8 system-ui,sans-serif;color:var(--ink)}.status{color:var(--mint);font-size:12px;margin:10px 0 0}.status.warn{color:#ffd99e}.error{color:#ffc1bd;background:#402326;border:1px solid #7b3e40;border-radius:10px;padding:10px 12px;margin:12px 0 0}.error:empty{display:none}.stats{color:var(--muted);font:11px/1.8 ui-monospace,monospace;display:flex;gap:12px;flex-wrap:wrap}.tag{color:var(--mint);font:11px/1.5 ui-monospace,monospace;border:1px solid #38584f;padding:5px 9px;border-radius:7px}.decoded{margin-top:10px;border:1px dashed var(--edge);border-radius:12px;background:#14111e;min-height:70px;white-space:pre-wrap;overflow-wrap:anywhere;padding:15px;font:16px/1.8 ui-monospace,monospace}.chips{display:flex;flex-wrap:wrap;gap:5px;max-height:182px;overflow:auto;padding:14px 4px}.chips button{font-family:var(--math);font-size:20px;line-height:2;padding:3px 9px;min-width:40px;min-height:53px}.chips button[aria-pressed=true]{border-color:var(--pink);background:#492d43}.glyph-big{font-family:var(--math);font-size:48px;line-height:2.7;text-align:center;color:var(--pink);padding:6px 0}.cp-list{display:grid;gap:8px}.cp{display:grid;grid-template-columns:82px minmax(0,1fr);gap:10px;border-bottom:1px solid #352b42;padding-bottom:8px}.cp code{color:var(--mint);font-size:12px}.cp span{font-size:10px;color:var(--muted);letter-spacing:.025em;overflow-wrap:anywhere}.cp em{display:block;font-style:normal;color:#9380a9}.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px}.formula{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.9 ui-monospace,monospace;padding:15px;background:#110f1a;border-radius:10px;color:var(--mint)}details{margin-top:14px}summary{cursor:pointer;color:var(--lilac);min-height:30px}details p{margin-top:12px}.wire{font-family:var(--math);line-height:2.3;min-height:150px;margin-top:10px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.footer{margin-top:22px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.toast{min-height:24px;color:var(--mint);font-size:13px;margin:13px 0 0}.sources{font-size:12px}.sources a{margin-right:14px}.noscript{padding:20px;background:#422b22}.wide{width:100%}
+@media(max-width:780px){main{padding:21px 15px 45px}.mast{align-items:flex-start}.eyebrow{font-size:10px}.pill{font-size:10px;white-space:nowrap}.hero{padding-top:14px}.hero h1{font-size:36px}.hero p{font-size:14px;padding-right:0}.hero .cat{display:none}.grid{grid-template-columns:1fr;grid-template-areas:'source' 'controls' 'preview' 'decoder' 'microscope' 'spec'}.panel{padding:18px}.bloom-display{font-size:27px}.spec-grid{grid-template-columns:1fr}.footer{display:block}.footer span{display:block;margin-bottom:6px}.two{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<noscript><div class="noscript">This workshop needs JavaScript. The companion Markdown specification and original specimen remain readable without it.</div></noscript>
+<main>
+  <div class="mast"><span class="eyebrow">⟬ glyph workshop / protocol 01 ⟭</span><span class="pill">local only · no font installation</span></div>
+  <header class="hero">
+    <h1 aria-label="diacritic bloom">𝔡̷̛̝̈́𝔦𝔞𝔠𝔯𝔦𝔱𝔦𝔠 𝓫𝓵𝓸𝓸𝓶</h1>
+    <p>Choose the letter-body. Grow the marks. Bring the words back.<br>Your original “the diacritics are now free” lives here, code point for code point.</p>
+    <div class="cat" aria-hidden="true">╭╌╌╌╌╌╮<br>ฅ(◉ᆺ◉)ฅ<br>╰ 𝔱̷̛̝̈́ ╯</div>
+    <div class="divider" aria-hidden="true">⌁ ◇ ⊹ ∴ ⊹ ◇ ⌁ ◇ ⊹ ∴ ⊹ ◇ ⌁</div>
+  </header>
+  <div class="grid">
+    <section class="panel source" aria-labelledby="source-heading">
+      <div class="panel-head"><h2 id="source-heading"><span class="panel-index">01</span>The words underneath</h2><span class="tag">ENCODE</span></div>
+      <label for="source">Source text</label><textarea id="source" maxlength="20000" spellcheck="false" placeholder="what would you like to grow?"></textarea>
+      <div class="row"><button id="original">↺ Your exact original</button><button id="example">☕ Kettle specimen</button></div>
+      <p class="hint" style="margin-top:12px">Editing text or controls makes a new, seeded bloom. The original button restores the literal chat specimen.</p>
+    </section>
+    <section class="panel controls" aria-labelledby="controls-heading">
+      <h2 id="controls-heading"><span class="panel-index">02</span>The mutation bench</h2>
+      <div class="stack">
+        <div><label for="font">Letter family</label><select id="font"></select></div>
+        <div><label for="mode">Font mixing</label><select id="mode"><option value="single">One family</option><option value="cycle-letter">Cycle families per letter</option><option value="cycle-word">Cycle families per word</option><option value="random-letter">Seeded random families</option></select><p id="palette-hint" class="hint" style="margin-top:7px">Mixed palette: Fraktur → bold script → double-struck → monospace.</p></div>
+      </div>
+      <div class="meters">
+        <div class="meter"><label for="above">↑ Above / upper-right <output id="above-value">2</output></label><input id="above" type="range" min="0" max="6" value="2"></div>
+        <div class="meter"><label for="overlay">↔ Through <output id="overlay-value">1</output></label><input id="overlay" type="range" min="0" max="2" value="1"></div>
+        <div class="meter"><label for="below">↓ Below <output id="below-value">1</output></label><input id="below" type="range" min="0" max="6" value="1"></div>
+      </div>
+      <div class="profiles" aria-label="Density presets"><button data-profile="dust">dust</button><button data-profile="bloom">bloom</button><button data-profile="feral">feral</button><button data-profile="overgrown">overgrown</button></div>
+      <div class="two"><div><label for="seed">Seed · repeatable mutation</label><input id="seed" type="number" min="0" max="4294967295" step="1" value="12648430"></div><button id="mutate" class="primary" style="align-self:end">✦ Mutate</button></div>
+      <hr class="muted-rule">
+      <label class="check"><input id="frame" type="checkbox">Add the original ornamental frame</label>
+      <label class="check"><input id="strict" type="checkbox">Strict ASCII input + line breaks</label>
+      <p class="hint">Up to 12 added marks per styled character. No added hidden payloads, joiners or variation selectors.</p>
+      <div id="error" role="alert" class="error"></div>
+    </section>
+    <section class="panel preview" aria-labelledby="preview-heading">
+      <div class="panel-head"><h2 id="preview-heading"><span class="panel-index">03</span>The bloom</h2><span class="tag" id="render-mode">LITERAL SPECIMEN</span></div>
+      <label class="check"><input type="checkbox" id="plain-view">Plain reading view</label>
+      <div id="bloom" class="bloom-display" aria-hidden="true"></div><span id="accessible-output" class="sr-only"></span>
+      <div id="stats" class="stats"></div><p id="roundtrip" class="status"></p>
+      <div class="row"><button id="copy" class="primary">Copy bloom</button><button id="save-text">Save .txt</button><button id="save-recipe">Save recipe .json</button></div>
+      <div class="row tight"><button id="load-recipe">Open recipe</button><input id="recipe-file" type="file" accept="application/json,.json" hidden></div>
+      <details id="wire-details"><summary>Raw encoded text</summary><label class="sr-only" for="wire">Raw encoded text for copying</label><textarea id="wire" class="wire" readonly spellcheck="false"></textarea></details>
+      <p id="toast" class="toast" role="status" aria-live="polite"></p>
+    </section>
+    <section class="panel decoder" aria-labelledby="decoder-heading">
+      <div class="panel-head"><h2 id="decoder-heading"><span class="panel-index">04</span>Bring the words back</h2><span class="tag">DECODE</span></div>
+      <label for="decode-input">Paste a bloom here</label><textarea id="decode-input" spellcheck="false" placeholder="𝔭̷̥̇𝔞̶̱́𝔰̴̤̂𝔱̷̠̇𝔢̶̥̃"></textarea>
+      <div class="row"><button id="use-current">Use current bloom</button><button id="copy-plain">Copy decoded words</button></div>
+      <label for="decoded" style="margin-top:15px">Decoded text</label><div id="decoded" class="decoded" role="region" aria-label="Decoded text"></div>
+      <p id="decode-error" class="error" role="alert"></p>
+      <p class="hint" style="margin-top:12px">This reverses the listed letter families and removes their recognized decorative marks. It leaves ordinary accented letters and emoji alone. Pre-existing mathematical styling cannot be distinguished from styling added here; the JSON recipe preserves the original source.</p>
+    </section>
+    <section class="panel microscope" aria-labelledby="microscope-heading">
+      <h2 id="microscope-heading"><span class="panel-index">05</span>Glyph microscope</h2><p class="hint">Tap a cluster. The apparent single glyph opens into its constituent code points. First 24 nonblank clusters shown.</p>
+      <div id="chips" class="chips" aria-label="Choose a glyph"></div><div id="glyph-big" class="glyph-big" aria-hidden="true"></div><div id="cp-list" class="cp-list"></div>
+    </section>
+    <section class="panel spec" aria-labelledby="spec-heading">
+      <h2 id="spec-heading"><span class="panel-index">06</span>The small-print spellbook</h2>
+      <div class="spec-grid">
+        <div><h3>One cluster, separate layers</h3><div class="formula">ASCII letter
+  → mapped Unicode letter-body
+  + through marks
+  + above marks
+  + below marks
+  = one decorated text cluster</div><p class="hint" style="margin-top:12px">These are Unicode characters, not a downloadable font. The device's fonts and layout engine decide how the marks actually sit.</p></div>
+        <div><h3>What “reversible” means here</h3><p class="hint">Printable ASCII plus tab and line breaks round-trips exactly through this codec. Other clusters pass through, but original styled symbols can become ambiguous. A validated recipe saves both source and encoded text explicitly.</p><p class="hint">NFC/NFD can reorder or decompose marks. NFKC/NFKD can also erase the styled alphabet. Do not normalize saved specimens when exact code points matter. The decoder is not a general-purpose accent remover and this is not encryption.</p><details><summary>Preservation and rendering notes</summary><p class="hint">The literal original contains U+0344, which canonically decomposes into U+0308 + U+0301, plus U+0340, which decomposes to U+0300. Its U+035C and U+035D marks can visually span neighboring letters. They are preserved in the specimen but excluded from random generation. Screens and apps can display the same sequence differently or clip tall stacks. No pixel-identical rendering is promised.</p></details></div>
+      </div>
+      <div class="sources" style="margin-top:20px">Unicode references: <a href="https://www.unicode.org/faq/char_combmark.html" target="_blank" rel="noopener noreferrer">Combining marks</a><a href="https://www.unicode.org/charts/nameslist/n_1D400.html" target="_blank" rel="noopener noreferrer">Styled alphabets</a><a href="https://www.unicode.org/reports/tr15/" target="_blank" rel="noopener noreferrer">Normalization</a><a href="https://www.unicode.org/reports/tr29/" target="_blank" rel="noopener noreferrer">Grapheme clusters</a></div>
+    </section>
+  </div>
+  <footer class="footer"><span>⟬ diacritic bloom / v1.0.0 ⟭ · decorative text, recoverable words</span><span>No uploads. No tracking. No bundled font files.</span></footer>
+</main>
+<script>
+/*__BLOOM_CORE__*/
+/*__BLOOM_UI__*/
+</script>
+</body>
+</html>

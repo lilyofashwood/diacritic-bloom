@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Diacritic Bloom · Unicode workshop</title>
+<style>
+:root{--bg:#100e19;--panel:#1b1727;--panel2:#211c30;--edge:#41364f;--ink:#f3edf9;--muted:#b8aec7;--pink:#f6a7d8;--lilac:#cab2ff;--mint:#a0e5ce;--math:'STIX Two Math','Cambria Math','Noto Sans Math','DejaVu Sans',serif}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#30203c 0,transparent 43%),radial-gradient(ellipse at 95% 35%,#172b2a 0,transparent 38%),var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+a{color:var(--mint);text-underline-offset:4px}button,input,select,textarea{font:inherit}button{cursor:pointer}button,input,select,textarea{border:1px solid var(--edge);border-radius:10px}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--mint);outline-offset:3px}button{background:#32273f;color:var(--ink);padding:10px 15px;min-height:44px;transition:background .15s}button:hover{background:#44334f}button.primary{background:var(--lilac);color:#21152f;font-weight:700;border-color:var(--lilac)}button:disabled{opacity:.55;cursor:not-allowed}input,select,textarea{width:100%;background:#110f1b;color:var(--ink);padding:11px 12px}textarea{resize:vertical;min-height:120px;line-height:1.8;font-size:16px}input[type=checkbox]{width:18px;height:18px;accent-color:var(--lilac);flex-shrink:0}input[type=range]{padding:0;accent-color:var(--pink);height:28px;border:0}select{min-height:46px}label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}h1,h2,h3,p{margin-top:0}h2{font-size:17px;letter-spacing:.02em;margin-bottom:14px}h3{font-size:14px}p:last-child{margin-bottom:0}small,.hint{font-size:12px;color:var(--muted)}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.9em}main{max-width:1180px;padding:32px 26px 70px;margin:auto}.mast{display:flex;align-items:center;justify-content:space-between;gap:16px}.eyebrow{font:11px/1.5 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}.pill{border:1px solid var(--edge);border-radius:30px;padding:7px 12px;color:var(--muted);font-size:12px}.hero{padding:26px 0 28px;position:relative}.hero h1{font-family:var(--math);font-size:clamp(37px,6vw,66px);font-weight:400;line-height:1.65;letter-spacing:-.02em;margin:0}.hero p{max-width:720px;color:var(--muted);font-size:16px;margin:3px 0 16px}.hero .cat{position:absolute;right:10px;bottom:15px;text-align:center;color:var(--pink);font:17px/1.35 var(--math)}.divider{letter-spacing:.27em;color:#827191;font-family:var(--math);overflow:hidden;white-space:nowrap}.grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:18px;grid-template-areas:'source controls' 'preview controls' 'decoder microscope' 'spec spec'}.panel{border:1px solid var(--edge);border-radius:18px;background:linear-gradient(130deg,#211b2d,#191620);padding:22px;min-width:0}.source{grid-area:source}.controls{grid-area:controls}.preview{grid-area:preview;overflow:hidden}.decoder{grid-area:decoder}.microscope{grid-area:microscope}.spec{grid-area:spec}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.panel-head h2{margin-bottom:0}.panel-head{margin-bottom:14px}.panel-index{color:var(--pink);margin-right:8px;font-family:ui-monospace,monospace}.row{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:12px}.row.tight{margin-top:6px}.stack{display:grid;gap:16px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.check{display:flex;align-items:center;gap:9px;color:var(--ink);font-size:13px}.meters{margin:20px 0}.meter{margin:13px 0}.meter label{display:flex;align-items:center;justify-content:space-between}.meter output{color:var(--pink);font-family:ui-monospace,monospace;font-size:14px}.profiles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:18px}.profiles button{padding:8px 3px;font-size:12px}.muted-rule{border:0;border-top:1px solid var(--edge);margin:20px 0}.bloom-display{font-family:var(--math);font-size:29px;line-height:2.35;white-space:pre-wrap;overflow-wrap:anywhere;padding:37px 10px;min-height:182px;color:#f6d4ef}.bloom-display.plain{font:18px/1.8 system-ui,sans-serif;color:var(--ink)}.status{color:var(--mint);font-size:12px;margin:10px 0 0}.status.warn{color:#ffd99e}.error{color:#ffc1bd;background:#402326;border:1px solid #7b3e40;border-radius:10px;padding:10px 12px;margin:12px 0 0}.error:empty{display:none}.stats{color:var(--muted);font:11px/1.8 ui-monospace,monospace;display:flex;gap:12px;flex-wrap:wrap}.tag{color:var(--mint);font:11px/1.5 ui-monospace,monospace;border:1px solid #38584f;padding:5px 9px;border-radius:7px}.decoded{margin-top:10px;border:1px dashed var(--edge);border-radius:12px;background:#14111e;min-height:70px;white-space:pre-wrap;overflow-wrap:anywhere;padding:15px;font:16px/1.8 ui-monospace,monospace}.chips{display:flex;flex-wrap:wrap;gap:5px;max-height:182px;overflow:auto;padding:14px 4px}.chips button{font-family:var(--math);font-size:20px;line-height:2;padding:3px 9px;min-width:40px;min-height:53px}.chips button[aria-pressed=true]{border-color:var(--pink);background:#492d43}.glyph-big{font-family:var(--math);font-size:48px;line-height:2.7;text-align:center;color:var(--pink);padding:6px 0}.cp-list{display:grid;gap:8px}.cp{display:grid;grid-template-columns:82px minmax(0,1fr);gap:10px;border-bottom:1px solid #352b42;padding-bottom:8px}.cp code{color:var(--mint);font-size:12px}.cp span{font-size:10px;color:var(--muted);letter-spacing:.025em;overflow-wrap:anywhere}.cp em{display:block;font-style:normal;color:#9380a9}.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px}.formula{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.9 ui-monospace,monospace;padding:15px;background:#110f1a;border-radius:10px;color:var(--mint)}details{margin-top:14px}summary{cursor:pointer;color:var(--lilac);min-height:30px}details p{margin-top:12px}.wire{font-family:var(--math);line-height:2.3;min-height:150px;margin-top:10px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.footer{margin-top:22px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.toast{min-height:24px;color:var(--mint);font-size:13px;margin:13px 0 0}.sources{font-size:12px}.sources a{margin-right:14px}.noscript{padding:20px;background:#422b22}.wide{width:100%}
+@media(max-width:780px){main{padding:21px 15px 45px}.mast{align-items:flex-start}.eyebrow{font-size:10px}.pill{font-size:10px;white-space:nowrap}.hero{padding-top:14px}.hero h1{font-size:36px}.hero p{font-size:14px;padding-right:0}.hero .cat{display:none}.grid{grid-template-columns:1fr;grid-template-areas:'source' 'controls' 'preview' 'decoder' 'microscope' 'spec'}.panel{padding:18px}.bloom-display{font-size:27px}.spec-grid{grid-template-columns:1fr}.footer{display:block}.footer span{display:block;margin-bottom:6px}.two{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<noscript><div class="noscript">This workshop needs JavaScript. The companion Markdown specification and original specimen remain readable without it.</div></noscript>
+<main>
+  <div class="mast"><span class="eyebrow">⟬ glyph workshop / protocol 01 ⟭</span><span class="pill">local only · no font installation</span></div>
+  <header class="hero">
+    <h1 aria-label="diacritic bloom">𝔡̷̛̝̈́𝔦𝔞𝔠𝔯𝔦𝔱𝔦𝔠 𝓫𝓵𝓸𝓸𝓶</h1>
+    <p>Choose the letter-body. Grow the marks. Bring the words back.<br>Your original “the diacritics are now free” lives here, code point for code point.</p>
+    <div class="cat" aria-hidden="true">╭╌╌╌╌╌╮<br>ฅ(◉ᆺ◉)ฅ<br>╰ 𝔱̷̛̝̈́ ╯</div>
+    <div class="divider" aria-hidden="true">⌁ ◇ ⊹ ∴ ⊹ ◇ ⌁ ◇ ⊹ ∴ ⊹ ◇ ⌁</div>
+  </header>
+  <div class="grid">
+    <section class="panel source" aria-labelledby="source-heading">
+      <div class="panel-head"><h2 id="source-heading"><span class="panel-index">01</span>The words underneath</h2><span class="tag">ENCODE</span></div>
+      <label for="source">Source text</label><textarea id="source" maxlength="20000" spellcheck="false" placeholder="what would you like to grow?"></textarea>
+      <div class="row"><button id="original">↺ Your exact original</button><button id="example">☕ Kettle specimen</button></div>
+      <p class="hint" style="margin-top:12px">Editing text or controls makes a new, seeded bloom. The original button restores the literal chat specimen.</p>
+    </section>
+    <section class="panel controls" aria-labelledby="controls-heading">
+      <h2 id="controls-heading"><span class="panel-index">02</span>The mutation bench</h2>
+      <div class="stack">
+        <div><label for="font">Letter family</label><select id="font"></select></div>
+        <div><label for="mode">Font mixing</label><select id="mode"><option value="single">One family</option><option value="cycle-letter">Cycle families per letter</option><option value="cycle-word">Cycle families per word</option><option value="random-letter">Seeded random families</option></select><p id="palette-hint" class="hint" style="margin-top:7px">Mixed palette: Fraktur → bold script → double-struck → monospace.</p></div>
+      </div>
+      <div class="meters">
+        <div class="meter"><label for="above">↑ Above / upper-right <output id="above-value">2</output></label><input id="above" type="range" min="0" max="6" value="2"></div>
+        <div class="meter"><label for="overlay">↔ Through <output id="overlay-value">1</output></label><input id="overlay" type="range" min="0" max="2" value="1"></div>
+        <div class="meter"><label for="below">↓ Below <output id="below-value">1</output></label><input id="below" type="range" min="0" max="6" value="1"></div>
+      </div>
+      <div class="profiles" aria-label="Density presets"><button data-profile="dust">dust</button><button data-profile="bloom">bloom</button><button data-profile="feral">feral</button><button data-profile="overgrown">overgrown</button></div>
+      <div class="two"><div><label for="seed">Seed · repeatable mutation</label><input id="seed" type="number" min="0" max="4294967295" step="1" value="12648430"></div><button id="mutate" class="primary" style="align-self:end">✦ Mutate</button></div>
+      <hr class="muted-rule">
+      <label class="check"><input id="frame" type="checkbox">Add the original ornamental frame</label>
+      <label class="check"><input id="strict" type="checkbox">Strict ASCII input + line breaks</label>
+      <p class="hint">Up to 12 added marks per styled character. No added hidden payloads, joiners or variation selectors.</p>
+      <div id="error" role="alert" class="error"></div>
+    </section>
+    <section class="panel preview" aria-labelledby="preview-heading">
+      <div class="panel-head"><h2 id="preview-heading"><span class="panel-index">03</span>The bloom</h2><span class="tag" id="render-mode">LITERAL SPECIMEN</span></div>
+      <label class="check"><input type="checkbox" id="plain-view">Plain reading view</label>
+      <div id="bloom" class="bloom-display" aria-hidden="true"></div><span id="accessible-output" class="sr-only"></span>
+      <div id="stats" class="stats"></div><p id="roundtrip" class="status"></p>
+      <div class="row"><button id="copy" class="primary">Copy bloom</button><button id="save-text">Save .txt</button><button id="save-recipe">Save recipe .json</button></div>
+      <div class="row tight"><button id="load-recipe">Open recipe</button><input id="recipe-file" type="file" accept="application/json,.json" hidden></div>
+      <details id="wire-details"><summary>Raw encoded text</summary><label class="sr-only" for="wire">Raw encoded text for copying</label><textarea id="wire" class="wire" readonly spellcheck="false"></textarea></details>
+      <p id="toast" class="toast" role="status" aria-live="polite"></p>
+    </section>
+    <section class="panel decoder" aria-labelledby="decoder-heading">
+      <div class="panel-head"><h2 id="decoder-heading"><span class="panel-index">04</span>Bring the words back</h2><span class="tag">DECODE</span></div>
+      <label for="decode-input">Paste a bloom here</label><textarea id="decode-input" spellcheck="false" placeholder="𝔭̷̥̇𝔞̶̱́𝔰̴̤̂𝔱̷̠̇𝔢̶̥̃"></textarea>
+      <div class="row"><button id="use-current">Use current bloom</button><button id="copy-plain">Copy decoded words</button></div>
+      <label for="decoded" style="margin-top:15px">Decoded text</label><div id="decoded" class="decoded" role="region" aria-label="Decoded text"></div>
+      <p id="decode-error" class="error" role="alert"></p>
+      <p class="hint" style="margin-top:12px">This reverses the listed letter families and removes their recognized decorative marks. It leaves ordinary accented letters and emoji alone. Pre-existing mathematical styling cannot be distinguished from styling added here; the JSON recipe preserves the original source.</p>
+    </section>
+    <section class="panel microscope" aria-labelledby="microscope-heading">
+      <h2 id="microscope-heading"><span class="panel-index">05</span>Glyph microscope</h2><p class="hint">Tap a cluster. The apparent single glyph opens into its constituent code points. First 24 nonblank clusters shown.</p>
+      <div id="chips" class="chips" aria-label="Choose a glyph"></div><div id="glyph-big" class="glyph-big" aria-hidden="true"></div><div id="cp-list" class="cp-list"></div>
+    </section>
+    <section class="panel spec" aria-labelledby="spec-heading">
+      <h2 id="spec-heading"><span class="panel-index">06</span>The small-print spellbook</h2>
+      <div class="spec-grid">
+        <div><h3>One cluster, separate layers</h3><div class="formula">ASCII letter
+  → mapped Unicode letter-body
+  + through marks
+  + above marks
+  + below marks
+  = one decorated text cluster</div><p class="hint" style="margin-top:12px">These are Unicode characters, not a downloadable font. The device's fonts and layout engine decide how the marks actually sit.</p></div>
+        <div><h3>What “reversible” means here</h3><p class="hint">Printable ASCII plus tab and line breaks round-trips exactly through this codec. Other clusters pass through, but original styled symbols can become ambiguous. A validated recipe saves both source and encoded text explicitly.</p><p class="hint">NFC/NFD can reorder or decompose marks. NFKC/NFKD can also erase the styled alphabet. Do not normalize saved specimens when exact code points matter. The decoder is not a general-purpose accent remover and this is not encryption.</p><details><summary>Preservation and rendering notes</summary><p class="hint">The literal original contains U+0344, which canonically decomposes into U+0308 + U+0301, plus U+0340, which decomposes to U+0300. Its U+035C and U+035D marks can visually span neighboring letters. They are preserved in the specimen but excluded from random generation. Screens and apps can display the same sequence differently or clip tall stacks. No pixel-identical rendering is promised.</p></details></div>
+      </div>
+      <div class="sources" style="margin-top:20px">Unicode references: <a href="https://www.unicode.org/faq/char_combmark.html" target="_blank" rel="noopener noreferrer">Combining marks</a><a href="https://www.unicode.org/charts/nameslist/n_1D400.html" target="_blank" rel="noopener noreferrer">Styled alphabets</a><a href="https://www.unicode.org/reports/tr15/" target="_blank" rel="noopener noreferrer">Normalization</a><a href="https://www.unicode.org/reports/tr29/" target="_blank" rel="noopener noreferrer">Grapheme clusters</a></div>
+    </section>
+  </div>
+  <footer class="footer"><span>⟬ diacritic bloom / v1.0.0 ⟭ · decorative text, recoverable words</span><span>No uploads. No tracking. No bundled font files.</span></footer>
+</main>
+<script>
+const DATA = {"format":"diacritic-bloom-tables","version":1,"fonts":{"fraktur":{"label":"Fraktur","map":{"A":"𝔄","B":"𝔅","C":"ℭ","D":"𝔇","E":"𝔈","F":"𝔉","G":"𝔊","H":"ℌ","I":"ℑ","J":"𝔍","K":"𝔎","L":"𝔏","M":"𝔐","N":"𝔑","O":"𝔒","P":"𝔓","Q":"𝔔","R":"ℜ","S":"𝔖","T":"𝔗","U":"𝔘","V":"𝔙","W":"𝔚","X":"𝔛","Y":"𝔜","Z":"ℨ","a":"𝔞","b":"𝔟","c":"𝔠","d":"𝔡","e":"𝔢","f":"𝔣","g":"𝔤","h":"𝔥","i":"𝔦","j":"𝔧","k":"𝔨","l":"𝔩","m":"𝔪","n":"𝔫","o":"𝔬","p":"𝔭","q":"𝔮","r":"𝔯","s":"𝔰","t":"𝔱","u":"𝔲","v":"𝔳","w":"𝔴","x":"𝔵","y":"𝔶","z":"𝔷"}},"bold-fraktur":{"label":"Bold Fraktur","map":{"A":"𝕬","B":"𝕭","C":"𝕮","D":"𝕯","E":"𝕰","F":"𝕱","G":"𝕲","H":"𝕳","I":"𝕴","J":"𝕵","K":"𝕶","L":"𝕷","M":"𝕸","N":"𝕹","O":"𝕺","P":"𝕻","Q":"𝕼","R":"𝕽","S":"𝕾","T":"𝕿","U":"𝖀","V":"𝖁","W":"𝖂","X":"𝖃","Y":"𝖄","Z":"𝖅","a":"𝖆","b":"𝖇","c":"𝖈","d":"𝖉","e":"𝖊","f":"𝖋","g":"𝖌","h":"𝖍","i":"𝖎","j":"𝖏","k":"𝖐","l":"𝖑","m":"𝖒","n":"𝖓","o":"𝖔","p":"𝖕","q":"𝖖","r":"𝖗","s":"𝖘","t":"𝖙","u":"𝖚","v":"𝖛","w":"𝖜","x":"𝖝","y":"𝖞","z":"𝖟"}},"script":{"label":"Script","map":{"A":"𝒜","B":"ℬ","C":"𝒞","D":"𝒟","E":"ℰ","F":"ℱ","G":"𝒢","H":"ℋ","I":"ℐ","J":"𝒥","K":"𝒦","L":"ℒ","M":"ℳ","N":"𝒩","O":"𝒪","P":"𝒫","Q":"𝒬","R":"ℛ","S":"𝒮","T":"𝒯","U":"𝒰","V":"𝒱","W":"𝒲","X":"𝒳","Y":"𝒴","Z":"𝒵","a":"𝒶","b":"𝒷","c":"𝒸","d":"𝒹","e":"ℯ","f":"𝒻","g":"ℊ","h":"𝒽","i":"𝒾","j":"𝒿","k":"𝓀","l":"𝓁","m":"𝓂","n":"𝓃","o":"ℴ","p":"𝓅","q":"𝓆","r":"𝓇","s":"𝓈","t":"𝓉","u":"𝓊","v":"𝓋","w":"𝓌","x":"𝓍","y":"𝓎","z":"𝓏"}},"bold-script":{"label":"Bold script","map":{"A":"𝓐","B":"𝓑","C":"𝓒","D":"𝓓","E":"𝓔","F":"𝓕","G":"𝓖","H":"𝓗","I":"𝓘","J":"𝓙","K":"𝓚","L":"𝓛","M":"𝓜","N":"𝓝","O":"𝓞","P":"𝓟","Q":"𝓠","R":"𝓡","S":"𝓢","T":"𝓣","U":"𝓤","V":"𝓥","W":"𝓦","X":"𝓧","Y":"𝓨","Z":"𝓩","a":"𝓪","b":"𝓫","c":"𝓬","d":"𝓭","e":"𝓮","f":"𝓯","g":"𝓰","h":"𝓱","i":"𝓲","j":"𝓳","k":"𝓴","l":"𝓵","m":"𝓶","n":"𝓷","o":"𝓸","p":"𝓹","q":"𝓺","r":"𝓻","s":"𝓼","t":"𝓽","u":"𝓾","v":"𝓿","w":"𝔀","x":"𝔁","y":"𝔂","z":"𝔃"}},"double-struck":{"label":"Double-struck","map":{"0":"𝟘","1":"𝟙","2":"𝟚","3":"𝟛","4":"𝟜","5":"𝟝","6":"𝟞","7":"𝟟","8":"𝟠","9":"𝟡","A":"𝔸","B":"𝔹","C":"ℂ","D":"𝔻","E":"𝔼","F":"𝔽","G":"𝔾","H":"ℍ","I":"𝕀","J":"𝕁","K":"𝕂","L":"𝕃","M":"𝕄","N":"ℕ","O":"𝕆","P":"ℙ","Q":"ℚ","R":"ℝ","S":"𝕊","T":"𝕋","U":"𝕌","V":"𝕍","W":"𝕎","X":"𝕏","Y":"𝕐","Z":"ℤ","a":"𝕒","b":"𝕓","c":"𝕔","d":"𝕕","e":"𝕖","f":"𝕗","g":"𝕘","h":"𝕙","i":"𝕚","j":"𝕛","k":"𝕜","l":"𝕝","m":"𝕞","n":"𝕟","o":"𝕠","p":"𝕡","q":"𝕢","r":"𝕣","s":"𝕤","t":"𝕥","u":"𝕦","v":"𝕧","w":"𝕨","x":"𝕩","y":"𝕪","z":"𝕫"}},"bold":{"label":"Serif bold","map":{"0":"𝟎","1":"𝟏","2":"𝟐","3":"𝟑","4":"𝟒","5":"𝟓","6":"𝟔","7":"𝟕","8":"𝟖","9":"𝟗","A":"𝐀","B":"𝐁","C":"𝐂","D":"𝐃","E":"𝐄","F":"𝐅","G":"𝐆","H":"𝐇","I":"𝐈","J":"𝐉","K":"𝐊","L":"𝐋","M":"𝐌","N":"𝐍","O":"𝐎","P":"𝐏","Q":"𝐐","R":"𝐑","S":"𝐒","T":"𝐓","U":"𝐔","V":"𝐕","W":"𝐖","X":"𝐗","Y":"𝐘","Z":"𝐙","a":"𝐚","b":"𝐛","c":"𝐜","d":"𝐝","e":"𝐞","f":"𝐟","g":"𝐠","h":"𝐡","i":"𝐢","j":"𝐣","k":"𝐤","l":"𝐥","m":"𝐦","n":"𝐧","o":"𝐨","p":"𝐩","q":"𝐪","r":"𝐫","s":"𝐬","t":"𝐭","u":"𝐮","v":"𝐯","w":"𝐰","x":"𝐱","y":"𝐲","z":"𝐳"}},"italic":{"label":"Serif italic","map":{"A":"𝐴","B":"𝐵","C":"𝐶","D":"𝐷","E":"𝐸","F":"𝐹","G":"𝐺","H":"𝐻","I":"𝐼","J":"𝐽","K":"𝐾","L":"𝐿","M":"𝑀","N":"𝑁","O":"𝑂","P":"𝑃","Q":"𝑄","R":"𝑅","S":"𝑆","T":"𝑇","U":"𝑈","V":"𝑉","W":"𝑊","X":"𝑋","Y":"𝑌","Z":"𝑍","a":"𝑎","b":"𝑏","c":"𝑐","d":"𝑑","e":"𝑒","f":"𝑓","g":"𝑔","h":"ℎ","i":"𝑖","j":"𝑗","k":"𝑘","l":"𝑙","m":"𝑚","n":"𝑛","o":"𝑜","p":"𝑝","q":"𝑞","r":"𝑟","s":"𝑠","t":"𝑡","u":"𝑢","v":"𝑣","w":"𝑤","x":"𝑥","y":"𝑦","z":"𝑧"}},"bold-italic":{"label":"Serif bold italic","map":{"A":"𝑨","B":"𝑩","C":"𝑪","D":"𝑫","E":"𝑬","F":"𝑭","G":"𝑮","H":"𝑯","I":"𝑰","J":"𝑱","K":"𝑲","L":"𝑳","M":"𝑴","N":"𝑵","O":"𝑶","P":"𝑷","Q":"𝑸","R":"𝑹","S":"𝑺","T":"𝑻","U":"𝑼","V":"𝑽","W":"𝑾","X":"𝑿","Y":"𝒀","Z":"𝒁","a":"𝒂","b":"𝒃","c":"𝒄","d":"𝒅","e":"𝒆","f":"𝒇","g":"𝒈","h":"𝒉","i":"𝒊","j":"𝒋","k":"𝒌","l":"𝒍","m":"𝒎","n":"𝒏","o":"𝒐","p":"𝒑","q":"𝒒","r":"𝒓","s":"𝒔","t":"𝒕","u":"𝒖","v":"𝒗","w":"𝒘","x":"𝒙","y":"𝒚","z":"𝒛"}},"sans":{"label":"Sans serif","map":{"0":"𝟢","1":"𝟣","2":"𝟤","3":"𝟥","4":"𝟦","5":"𝟧","6":"𝟨","7":"𝟩","8":"𝟪","9":"𝟫","A":"𝖠","B":"𝖡","C":"𝖢","D":"𝖣","E":"𝖤","F":"𝖥","G":"𝖦","H":"𝖧","I":"𝖨","J":"𝖩","K":"𝖪","L":"𝖫","M":"𝖬","N":"𝖭","O":"𝖮","P":"𝖯","Q":"𝖰","R":"𝖱","S":"𝖲","T":"𝖳","U":"𝖴","V":"𝖵","W":"𝖶","X":"𝖷","Y":"𝖸","Z":"𝖹","a":"𝖺","b":"𝖻","c":"𝖼","d":"𝖽","e":"𝖾","f":"𝖿","g":"𝗀","h":"𝗁","i":"𝗂","j":"𝗃","k":"𝗄","l":"𝗅","m":"𝗆","n":"𝗇","o":"𝗈","p":"𝗉","q":"𝗊","r":"𝗋","s":"𝗌","t":"𝗍","u":"𝗎","v":"𝗏","w":"𝗐","x":"𝗑","y":"𝗒","z":"𝗓"}},"sans-bold":{"label":"Sans bold","map":{"0":"𝟬","1":"𝟭","2":"𝟮","3":"𝟯","4":"𝟰","5":"𝟱","6":"𝟲","7":"𝟳","8":"𝟴","9":"𝟵","A":"𝗔","B":"𝗕","C":"𝗖","D":"𝗗","E":"𝗘","F":"𝗙","G":"𝗚","H":"𝗛","I":"𝗜","J":"𝗝","K":"𝗞","L":"𝗟","M":"𝗠","N":"𝗡","O":"𝗢","P":"𝗣","Q":"𝗤","R":"𝗥","S":"𝗦","T":"𝗧","U":"𝗨","V":"𝗩","W":"𝗪","X":"𝗫","Y":"𝗬","Z":"𝗭","a":"𝗮","b":"𝗯","c":"𝗰","d":"𝗱","e":"𝗲","f":"𝗳","g":"𝗴","h":"𝗵","i":"𝗶","j":"𝗷","k":"𝗸","l":"𝗹","m":"𝗺","n":"𝗻","o":"𝗼","p":"𝗽","q":"𝗾","r":"𝗿","s":"𝘀","t":"𝘁","u":"𝘂","v":"𝘃","w":"𝘄","x":"𝘅","y":"𝘆","z":"𝘇"}},"sans-italic":{"label":"Sans italic","map":{"A":"𝘈","B":"𝘉","C":"𝘊","D":"𝘋","E":"𝘌","F":"𝘍","G":"𝘎","H":"𝘏","I":"𝘐","J":"𝘑","K":"𝘒","L":"𝘓","M":"𝘔","N":"𝘕","O":"𝘖","P":"𝘗","Q":"𝘘","R":"𝘙","S":"𝘚","T":"𝘛","U":"𝘜","V":"𝘝","W":"𝘞","X":"𝘟","Y":"𝘠","Z":"𝘡","a":"𝘢","b":"𝘣","c":"𝘤","d":"𝘥","e":"𝘦","f":"𝘧","g":"𝘨","h":"𝘩","i":"𝘪","j":"𝘫","k":"𝘬","l":"𝘭","m":"𝘮","n":"𝘯","o":"𝘰","p":"𝘱","q":"𝘲","r":"𝘳","s":"𝘴","t":"𝘵","u":"𝘶","v":"𝘷","w":"𝘸","x":"𝘹","y":"𝘺","z":"𝘻"}},"sans-bold-italic":{"label":"Sans bold italic","map":{"A":"𝘼","B":"𝘽","C":"𝘾","D":"𝘿","E":"𝙀","F":"𝙁","G":"𝙂","H":"𝙃","I":"𝙄","J":"𝙅","K":"𝙆","L":"𝙇","M":"𝙈","N":"𝙉","O":"𝙊","P":"𝙋","Q":"𝙌","R":"𝙍","S":"𝙎","T":"𝙏","U":"𝙐","V":"𝙑","W":"𝙒","X":"𝙓","Y":"𝙔","Z":"𝙕","a":"𝙖","b":"𝙗","c":"𝙘","d":"𝙙","e":"𝙚","f":"𝙛","g":"𝙜","h":"𝙝","i":"𝙞","j":"𝙟","k":"𝙠","l":"𝙡","m":"𝙢","n":"𝙣","o":"𝙤","p":"𝙥","q":"𝙦","r":"𝙧","s":"𝙨","t":"𝙩","u":"𝙪","v":"𝙫","w":"𝙬","x":"𝙭","y":"𝙮","z":"𝙯"}},"monospace":{"label":"Monospace","map":{"0":"𝟶","1":"𝟷","2":"𝟸","3":"𝟹","4":"𝟺","5":"𝟻","6":"𝟼","7":"𝟽","8":"𝟾","9":"𝟿","A":"𝙰","B":"𝙱","C":"𝙲","D":"𝙳","E":"𝙴","F":"𝙵","G":"𝙶","H":"𝙷","I":"𝙸","J":"𝙹","K":"𝙺","L":"𝙻","M":"𝙼","N":"𝙽","O":"𝙾","P":"𝙿","Q":"𝚀","R":"𝚁","S":"𝚂","T":"𝚃","U":"𝚄","V":"𝚅","W":"𝚆","X":"𝚇","Y":"𝚈","Z":"𝚉","a":"𝚊","b":"𝚋","c":"𝚌","d":"𝚍","e":"𝚎","f":"𝚏","g":"𝚐","h":"𝚑","i":"𝚒","j":"𝚓","k":"𝚔","l":"𝚕","m":"𝚖","n":"𝚗","o":"𝚘","p":"𝚙","q":"𝚚","r":"𝚛","s":"𝚜","t":"𝚝","u":"𝚞","v":"𝚟","w":"𝚠","x":"𝚡","y":"𝚢","z":"𝚣"}},"fullwidth":{"label":"Fullwidth","map":{"0":"０","1":"１","2":"２","3":"３","4":"４","5":"５","6":"６","7":"７","8":"８","9":"９","A":"Ａ","B":"Ｂ","C":"Ｃ","D":"Ｄ","E":"Ｅ","F":"Ｆ","G":"Ｇ","H":"Ｈ","I":"Ｉ","J":"Ｊ","K":"Ｋ","L":"Ｌ","M":"Ｍ","N":"Ｎ","O":"Ｏ","P":"Ｐ","Q":"Ｑ","R":"Ｒ","S":"Ｓ","T":"Ｔ","U":"Ｕ","V":"Ｖ","W":"Ｗ","X":"Ｘ","Y":"Ｙ","Z":"Ｚ","a":"ａ","b":"ｂ","c":"ｃ","d":"ｄ","e":"ｅ","f":"ｆ","g":"ｇ","h":"ｈ","i":"ｉ","j":"ｊ","k":"ｋ","l":"ｌ","m":"ｍ","n":"ｎ","o":"ｏ","p":"ｐ","q":"ｑ","r":"ｒ","s":"ｓ","t":"ｔ","u":"ｕ","v":"ｖ","w":"ｗ","x":"ｘ","y":"ｙ","z":"ｚ"}}},"pools":{"overlay":["̴","̵","̶","̷","̸"],"above":["̀","́","̂","̃","̄","̆","̇","̈","̉","̊","̋","̌","̏","̐","̑","̓","̔","̛","̽","̾","̿","͂","͆","͊","͋","͌","͐","͑","͒","͗","͘","͛"],"below":["̖","̗","̘","̙","̜","̝","̞","̟","̠","̡","̢","̣","̤","̥","̦","̧","̨","̩","̪","̫","̬","̭","̮","̯","̰","̱","̲","̳","̹","̺","̻","̼","͇","͈","͉","͍","͎","͓","͔","͕","͖","͙","͚"]},"markInfo":{"̀":{"name":"COMBINING GRAVE ACCENT","ccc":230,"category":"Mn"},"́":{"name":"COMBINING ACUTE ACCENT","ccc":230,"category":"Mn"},"̂":{"name":"COMBINING CIRCUMFLEX ACCENT","ccc":230,"category":"Mn"},"̃":{"name":"COMBINING TILDE","ccc":230,"category":"Mn"},"̄":{"name":"COMBINING MACRON","ccc":230,"category":"Mn"},"̆":{"name":"COMBINING BREVE","ccc":230,"category":"Mn"},"̇":{"name":"COMBINING DOT ABOVE","ccc":230,"category":"Mn"},"̈":{"name":"COMBINING DIAERESIS","ccc":230,"category":"Mn"},"̉":{"name":"COMBINING HOOK ABOVE","ccc":230,"category":"Mn"},"̊":{"name":"COMBINING RING ABOVE","ccc":230,"category":"Mn"},"̋":{"name":"COMBINING DOUBLE ACUTE ACCENT","ccc":230,"category":"Mn"},"̌":{"name":"COMBINING CARON","ccc":230,"category":"Mn"},"̏":{"name":"COMBINING DOUBLE GRAVE ACCENT","ccc":230,"category":"Mn"},"̐":{"name":"COMBINING CANDRABINDU","ccc":230,"category":"Mn"},"̑":{"name":"COMBINING INVERTED BREVE","ccc":230,"category":"Mn"},"̓":{"name":"COMBINING COMMA ABOVE","ccc":230,"category":"Mn"},"̔":{"name":"COMBINING REVERSED COMMA ABOVE","ccc":230,"category":"Mn"},"̖":{"name":"COMBINING GRAVE ACCENT BELOW","ccc":220,"category":"Mn"},"̗":{"name":"COMBINING ACUTE ACCENT BELOW","ccc":220,"category":"Mn"},"̘":{"name":"COMBINING LEFT TACK BELOW","ccc":220,"category":"Mn"},"̙":{"name":"COMBINING RIGHT TACK BELOW","ccc":220,"category":"Mn"},"̛":{"name":"COMBINING HORN","ccc":216,"category":"Mn"},"̜":{"name":"COMBINING LEFT HALF RING BELOW","ccc":220,"category":"Mn"},"̝":{"name":"COMBINING UP TACK BELOW","ccc":220,"category":"Mn"},"̞":{"name":"COMBINING DOWN TACK BELOW","ccc":220,"category":"Mn"},"̟":{"name":"COMBINING PLUS SIGN BELOW","ccc":220,"category":"Mn"},"̠":{"name":"COMBINING MINUS SIGN BELOW","ccc":220,"category":"Mn"},"̡":{"name":"COMBINING PALATALIZED HOOK BELOW","ccc":202,"category":"Mn"},"̢":{"name":"COMBINING RETROFLEX HOOK BELOW","ccc":202,"category":"Mn"},"̣":{"name":"COMBINING DOT BELOW","ccc":220,"category":"Mn"},"̤":{"name":"COMBINING DIAERESIS BELOW","ccc":220,"category":"Mn"},"̥":{"name":"COMBINING RING BELOW","ccc":220,"category":"Mn"},"̦":{"name":"COMBINING COMMA BELOW","ccc":220,"category":"Mn"},"̧":{"name":"COMBINING CEDILLA","ccc":202,"category":"Mn"},"̨":{"name":"COMBINING OGONEK","ccc":202,"category":"Mn"},"̩":{"name":"COMBINING VERTICAL LINE BELOW","ccc":220,"category":"Mn"},"̪":{"name":"COMBINING BRIDGE BELOW","ccc":220,"category":"Mn"},"̫":{"name":"COMBINING INVERTED DOUBLE ARCH BELOW","ccc":220,"category":"Mn"},"̬":{"name":"COMBINING CARON BELOW","ccc":220,"category":"Mn"},"̭":{"name":"COMBINING CIRCUMFLEX ACCENT BELOW","ccc":220,"category":"Mn"},"̮":{"name":"COMBINING BREVE BELOW","ccc":220,"category":"Mn"},"̯":{"name":"COMBINING INVERTED BREVE BELOW","ccc":220,"category":"Mn"},"̰":{"name":"COMBINING TILDE BELOW","ccc":220,"category":"Mn"},"̱":{"name":"COMBINING MACRON BELOW","ccc":220,"category":"Mn"},"̲":{"name":"COMBINING LOW LINE","ccc":220,"category":"Mn"},"̳":{"name":"COMBINING DOUBLE LOW LINE","ccc":220,"category":"Mn"},"̴":{"name":"COMBINING TILDE OVERLAY","ccc":1,"category":"Mn"},"̵":{"name":"COMBINING SHORT STROKE OVERLAY","ccc":1,"category":"Mn"},"̶":{"name":"COMBINING LONG STROKE OVERLAY","ccc":1,"category":"Mn"},"̷":{"name":"COMBINING SHORT SOLIDUS OVERLAY","ccc":1,"category":"Mn"},"̸":{"name":"COMBINING LONG SOLIDUS OVERLAY","ccc":1,"category":"Mn"},"̹":{"name":"COMBINING RIGHT HALF RING BELOW","ccc":220,"category":"Mn"},"̺":{"name":"COMBINING INVERTED BRIDGE BELOW","ccc":220,"category":"Mn"},"̻":{"name":"COMBINING SQUARE BELOW","ccc":220,"category":"Mn"},"̼":{"name":"COMBINING SEAGULL BELOW","ccc":220,"category":"Mn"},"̽":{"name":"COMBINING X ABOVE","ccc":230,"category":"Mn"},"̾":{"name":"COMBINING VERTICAL TILDE","ccc":230,"category":"Mn"},"̿":{"name":"COMBINING DOUBLE OVERLINE","ccc":230,"category":"Mn"},"̀":{"name":"COMBINING GRAVE TONE MARK","ccc":230,"category":"Mn"},"͂":{"name":"COMBINING GREEK PERISPOMENI","ccc":230,"category":"Mn"},"̈́":{"name":"COMBINING GREEK DIALYTIKA TONOS","ccc":230,"category":"Mn"},"͆":{"name":"COMBINING BRIDGE ABOVE","ccc":230,"category":"Mn"},"͇":{"name":"COMBINING EQUALS SIGN BELOW","ccc":220,"category":"Mn"},"͈":{"name":"COMBINING DOUBLE VERTICAL LINE BELOW","ccc":220,"category":"Mn"},"͉":{"name":"COMBINING LEFT ANGLE BELOW","ccc":220,"category":"Mn"},"͊":{"name":"COMBINING NOT TILDE ABOVE","ccc":230,"category":"Mn"},"͋":{"name":"COMBINING HOMOTHETIC ABOVE","ccc":230,"category":"Mn"},"͌":{"name":"COMBINING ALMOST EQUAL TO ABOVE","ccc":230,"category":"Mn"},"͍":{"name":"COMBINING LEFT RIGHT ARROW BELOW","ccc":220,"category":"Mn"},"͎":{"name":"COMBINING UPWARDS ARROW BELOW","ccc":220,"category":"Mn"},"͐":{"name":"COMBINING RIGHT ARROWHEAD ABOVE","ccc":230,"category":"Mn"},"͑":{"name":"COMBINING LEFT HALF RING ABOVE","ccc":230,"category":"Mn"},"͒":{"name":"COMBINING FERMATA","ccc":230,"category":"Mn"},"͓":{"name":"COMBINING X BELOW","ccc":220,"category":"Mn"},"͔":{"name":"COMBINING LEFT ARROWHEAD BELOW","ccc":220,"category":"Mn"},"͕":{"name":"COMBINING RIGHT ARROWHEAD BELOW","ccc":220,"category":"Mn"},"͖":{"name":"COMBINING RIGHT ARROWHEAD AND UP ARROWHEAD BELOW","ccc":220,"category":"Mn"},"͗":{"name":"COMBINING RIGHT HALF RING ABOVE","ccc":230,"category":"Mn"},"͘":{"name":"COMBINING DOT ABOVE RIGHT","ccc":232,"category":"Mn"},"͙":{"name":"COMBINING ASTERISK BELOW","ccc":220,"category":"Mn"},"͚":{"name":"COMBINING DOUBLE RING BELOW","ccc":220,"category":"Mn"},"͛":{"name":"COMBINING ZIGZAG ABOVE","ccc":230,"category":"Mn"},"͜":{"name":"COMBINING DOUBLE BREVE BELOW","ccc":233,"category":"Mn"},"͝":{"name":"COMBINING DOUBLE BREVE","ccc":234,"category":"Mn"}},"baseNames":{"𝔄":"MATHEMATICAL FRAKTUR CAPITAL A","𝔅":"MATHEMATICAL FRAKTUR CAPITAL B","ℭ":"BLACK-LETTER CAPITAL C","𝔇":"MATHEMATICAL FRAKTUR CAPITAL D","𝔈":"MATHEMATICAL FRAKTUR CAPITAL E","𝔉":"MATHEMATICAL FRAKTUR CAPITAL F","𝔊":"MATHEMATICAL FRAKTUR CAPITAL G","ℌ":"BLACK-LETTER CAPITAL H","ℑ":"BLACK-LETTER CAPITAL I","𝔍":"MATHEMATICAL FRAKTUR CAPITAL J","𝔎":"MATHEMATICAL FRAKTUR CAPITAL K","𝔏":"MATHEMATICAL FRAKTUR CAPITAL L","𝔐":"MATHEMATICAL FRAKTUR CAPITAL M","𝔑":"MATHEMATICAL FRAKTUR CAPITAL N","𝔒":"MATHEMATICAL FRAKTUR CAPITAL O","𝔓":"MATHEMATICAL FRAKTUR CAPITAL P","𝔔":"MATHEMATICAL FRAKTUR CAPITAL Q","ℜ":"BLACK-LETTER CAPITAL R","𝔖":"MATHEMATICAL FRAKTUR CAPITAL S","𝔗":"MATHEMATICAL FRAKTUR CAPITAL T","𝔘":"MATHEMATICAL FRAKTUR CAPITAL U","𝔙":"MATHEMATICAL FRAKTUR CAPITAL V","𝔚":"MATHEMATICAL FRAKTUR CAPITAL W","𝔛":"MATHEMATICAL FRAKTUR CAPITAL X","𝔜":"MATHEMATICAL FRAKTUR CAPITAL Y","ℨ":"BLACK-LETTER CAPITAL Z","𝔞":"MATHEMATICAL FRAKTUR SMALL A","𝔟":"MATHEMATICAL FRAKTUR SMALL B","𝔠":"MATHEMATICAL FRAKTUR SMALL C","𝔡":"MATHEMATICAL FRAKTUR SMALL D","𝔢":"MATHEMATICAL FRAKTUR SMALL E","𝔣":"MATHEMATICAL FRAKTUR SMALL F","𝔤":"MATHEMATICAL FRAKTUR SMALL G","𝔥":"MATHEMATICAL FRAKTUR SMALL H","𝔦":"MATHEMATICAL FRAKTUR SMALL I","𝔧":"MATHEMATICAL FRAKTUR SMALL J","𝔨":"MATHEMATICAL FRAKTUR SMALL K","𝔩":"MATHEMATICAL FRAKTUR SMALL L","𝔪":"MATHEMATICAL FRAKTUR SMALL M","𝔫":"MATHEMATICAL FRAKTUR SMALL N","𝔬":"MATHEMATICAL FRAKTUR SMALL O","𝔭":"MATHEMATICAL FRAKTUR SMALL P","𝔮":"MATHEMATICAL FRAKTUR SMALL Q","𝔯":"MATHEMATICAL FRAKTUR SMALL R","𝔰":"MATHEMATICAL FRAKTUR SMALL S","𝔱":"MATHEMATICAL FRAKTUR SMALL T","𝔲":"MATHEMATICAL FRAKTUR SMALL U","𝔳":"MATHEMATICAL FRAKTUR SMALL V","𝔴":"MATHEMATICAL FRAKTUR SMALL W","𝔵":"MATHEMATICAL FRAKTUR SMALL X","𝔶":"MATHEMATICAL FRAKTUR SMALL Y","𝔷":"MATHEMATICAL FRAKTUR SMALL Z","𝕬":"MATHEMATICAL BOLD FRAKTUR CAPITAL A","𝕭":"MATHEMATICAL BOLD FRAKTUR CAPITAL B","𝕮":"MATHEMATICAL BOLD FRAKTUR CAPITAL C","𝕯":"MATHEMATICAL BOLD FRAKTUR CAPITAL D","𝕰":"MATHEMATICAL BOLD FRAKTUR CAPITAL E","𝕱":"MATHEMATICAL BOLD FRAKTUR CAPITAL F","𝕲":"MATHEMATICAL BOLD FRAKTUR CAPITAL G","𝕳":"MATHEMATICAL BOLD FRAKTUR CAPITAL H","𝕴":"MATHEMATICAL BOLD FRAKTUR CAPITAL I","𝕵":"MATHEMATICAL BOLD FRAKTUR CAPITAL J","𝕶":"MATHEMATICAL BOLD FRAKTUR CAPITAL K","𝕷":"MATHEMATICAL BOLD FRAKTUR CAPITAL L","𝕸":"MATHEMATICAL BOLD FRAKTUR CAPITAL M","𝕹":"MATHEMATICAL BOLD FRAKTUR CAPITAL N","𝕺":"MATHEMATICAL BOLD FRAKTUR CAPITAL O","𝕻":"MATHEMATICAL BOLD FRAKTUR CAPITAL P","𝕼":"MATHEMATICAL BOLD FRAKTUR CAPITAL Q","𝕽":"MATHEMATICAL BOLD FRAKTUR CAPITAL R","𝕾":"MATHEMATICAL BOLD FRAKTUR CAPITAL S","𝕿":"MATHEMATICAL BOLD FRAKTUR CAPITAL T","𝖀":"MATHEMATICAL BOLD FRAKTUR CAPITAL U","𝖁":"MATHEMATICAL BOLD FRAKTUR CAPITAL V","𝖂":"MATHEMATICAL BOLD FRAKTUR CAPITAL W","𝖃":"MATHEMATICAL BOLD FRAKTUR CAPITAL X","𝖄":"MATHEMATICAL BOLD FRAKTUR CAPITAL Y","𝖅":"MATHEMATICAL BOLD FRAKTUR CAPITAL Z","𝖆":"MATHEMATICAL BOLD FRAKTUR SMALL A","𝖇":"MATHEMATICAL BOLD FRAKTUR SMALL B","𝖈":"MATHEMATICAL BOLD FRAKTUR SMALL C","𝖉":"MATHEMATICAL BOLD FRAKTUR SMALL D","𝖊":"MATHEMATICAL BOLD FRAKTUR SMALL E","𝖋":"MATHEMATICAL BOLD FRAKTUR SMALL F","𝖌":"MATHEMATICAL BOLD FRAKTUR SMALL G","𝖍":"MATHEMATICAL BOLD FRAKTUR SMALL H","𝖎":"MATHEMATICAL BOLD FRAKTUR SMALL I","𝖏":"MATHEMATICAL BOLD FRAKTUR SMALL J","𝖐":"MATHEMATICAL BOLD FRAKTUR SMALL K","𝖑":"MATHEMATICAL BOLD FRAKTUR SMALL L","𝖒":"MATHEMATICAL BOLD FRAKTUR SMALL M","𝖓":"MATHEMATICAL BOLD FRAKTUR SMALL N","𝖔":"MATHEMATICAL BOLD FRAKTUR SMALL O","𝖕":"MATHEMATICAL BOLD FRAKTUR SMALL P","𝖖":"MATHEMATICAL BOLD FRAKTUR SMALL Q","𝖗":"MATHEMATICAL BOLD FRAKTUR SMALL R","𝖘":"MATHEMATICAL BOLD FRAKTUR SMALL S","𝖙":"MATHEMATICAL BOLD FRAKTUR SMALL T","𝖚":"MATHEMATICAL BOLD FRAKTUR SMALL U","𝖛":"MATHEMATICAL BOLD FRAKTUR SMALL V","𝖜":"MATHEMATICAL BOLD FRAKTUR SMALL W","𝖝":"MATHEMATICAL BOLD FRAKTUR SMALL X","𝖞":"MATHEMATICAL BOLD FRAKTUR SMALL Y","𝖟":"MATHEMATICAL BOLD FRAKTUR SMALL Z","𝒜":"MATHEMATICAL SCRIPT CAPITAL A","ℬ":"SCRIPT CAPITAL B","𝒞":"MATHEMATICAL SCRIPT CAPITAL C","𝒟":"MATHEMATICAL SCRIPT CAPITAL D","ℰ":"SCRIPT CAPITAL E","ℱ":"SCRIPT CAPITAL F","𝒢":"MATHEMATICAL SCRIPT CAPITAL G","ℋ":"SCRIPT CAPITAL H","ℐ":"SCRIPT CAPITAL I","𝒥":"MATHEMATICAL SCRIPT CAPITAL J","𝒦":"MATHEMATICAL SCRIPT CAPITAL K","ℒ":"SCRIPT CAPITAL L","ℳ":"SCRIPT CAPITAL M","𝒩":"MATHEMATICAL SCRIPT CAPITAL N","𝒪":"MATHEMATICAL SCRIPT CAPITAL O","𝒫":"MATHEMATICAL SCRIPT CAPITAL P","𝒬":"MATHEMATICAL SCRIPT CAPITAL Q","ℛ":"SCRIPT CAPITAL R","𝒮":"MATHEMATICAL SCRIPT CAPITAL S","𝒯":"MATHEMATICAL SCRIPT CAPITAL T","𝒰":"MATHEMATICAL SCRIPT CAPITAL U","𝒱":"MATHEMATICAL SCRIPT CAPITAL V","𝒲":"MATHEMATICAL SCRIPT CAPITAL W","𝒳":"MATHEMATICAL SCRIPT CAPITAL X","𝒴":"MATHEMATICAL SCRIPT CAPITAL Y","𝒵":"MATHEMATICAL SCRIPT CAPITAL Z","𝒶":"MATHEMATICAL SCRIPT SMALL A","𝒷":"MATHEMATICAL SCRIPT SMALL B","𝒸":"MATHEMATICAL SCRIPT SMALL C","𝒹":"MATHEMATICAL SCRIPT SMALL D","ℯ":"SCRIPT SMALL E","𝒻":"MATHEMATICAL SCRIPT SMALL F","ℊ":"SCRIPT SMALL G","𝒽":"MATHEMATICAL SCRIPT SMALL H","𝒾":"MATHEMATICAL SCRIPT SMALL I","𝒿":"MATHEMATICAL SCRIPT SMALL J","𝓀":"MATHEMATICAL SCRIPT SMALL K","𝓁":"MATHEMATICAL SCRIPT SMALL L","𝓂":"MATHEMATICAL SCRIPT SMALL M","𝓃":"MATHEMATICAL SCRIPT SMALL N","ℴ":"SCRIPT SMALL O","𝓅":"MATHEMATICAL SCRIPT SMALL P","𝓆":"MATHEMATICAL SCRIPT SMALL Q","𝓇":"MATHEMATICAL SCRIPT SMALL R","𝓈":"MATHEMATICAL SCRIPT SMALL S","𝓉":"MATHEMATICAL SCRIPT SMALL T","𝓊":"MATHEMATICAL SCRIPT SMALL U","𝓋":"MATHEMATICAL SCRIPT SMALL V","𝓌":"MATHEMATICAL SCRIPT SMALL W","𝓍":"MATHEMATICAL SCRIPT SMALL X","𝓎":"MATHEMATICAL SCRIPT SMALL Y","𝓏":"MATHEMATICAL SCRIPT SMALL Z","𝓐":"MATHEMATICAL BOLD SCRIPT CAPITAL A","𝓑":"MATHEMATICAL BOLD SCRIPT CAPITAL B","𝓒":"MATHEMATICAL BOLD SCRIPT CAPITAL C","𝓓":"MATHEMATICAL BOLD SCRIPT CAPITAL D","𝓔":"MATHEMATICAL BOLD SCRIPT CAPITAL E","𝓕":"MATHEMATICAL BOLD SCRIPT CAPITAL F","𝓖":"MATHEMATICAL BOLD SCRIPT CAPITAL G","𝓗":"MATHEMATICAL BOLD SCRIPT CAPITAL H","𝓘":"MATHEMATICAL BOLD SCRIPT CAPITAL I","𝓙":"MATHEMATICAL BOLD SCRIPT CAPITAL J","𝓚":"MATHEMATICAL BOLD SCRIPT CAPITAL K","𝓛":"MATHEMATICAL BOLD SCRIPT CAPITAL L","𝓜":"MATHEMATICAL BOLD SCRIPT CAPITAL M","𝓝":"MATHEMATICAL BOLD SCRIPT CAPITAL N","𝓞":"MATHEMATICAL BOLD SCRIPT CAPITAL O","𝓟":"MATHEMATICAL BOLD SCRIPT CAPITAL P","𝓠":"MATHEMATICAL BOLD SCRIPT CAPITAL Q","𝓡":"MATHEMATICAL BOLD SCRIPT CAPITAL R","𝓢":"MATHEMATICAL BOLD SCRIPT CAPITAL S","𝓣":"MATHEMATICAL BOLD SCRIPT CAPITAL T","𝓤":"MATHEMATICAL BOLD SCRIPT CAPITAL U","𝓥":"MATHEMATICAL BOLD SCRIPT CAPITAL V","𝓦":"MATHEMATICAL BOLD SCRIPT CAPITAL W","𝓧":"MATHEMATICAL BOLD SCRIPT CAPITAL X","𝓨":"MATHEMATICAL BOLD SCRIPT CAPITAL Y","𝓩":"MATHEMATICAL BOLD SCRIPT CAPITAL Z","𝓪":"MATHEMATICAL BOLD SCRIPT SMALL A","𝓫":"MATHEMATICAL BOLD SCRIPT SMALL B","𝓬":"MATHEMATICAL BOLD SCRIPT SMALL C","𝓭":"MATHEMATICAL BOLD SCRIPT SMALL D","𝓮":"MATHEMATICAL BOLD SCRIPT SMALL E","𝓯":"MATHEMATICAL BOLD SCRIPT SMALL F","𝓰":"MATHEMATICAL BOLD SCRIPT SMALL G","𝓱":"MATHEMATICAL BOLD SCRIPT SMALL H","𝓲":"MATHEMATICAL BOLD SCRIPT SMALL I","𝓳":"MATHEMATICAL BOLD SCRIPT SMALL J","𝓴":"MATHEMATICAL BOLD SCRIPT SMALL K","𝓵":"MATHEMATICAL BOLD SCRIPT SMALL L","𝓶":"MATHEMATICAL BOLD SCRIPT SMALL M","𝓷":"MATHEMATICAL BOLD SCRIPT SMALL N","𝓸":"MATHEMATICAL BOLD SCRIPT SMALL O","𝓹":"MATHEMATICAL BOLD SCRIPT SMALL P","𝓺":"MATHEMATICAL BOLD SCRIPT SMALL Q","𝓻":"MATHEMATICAL BOLD SCRIPT SMALL R","𝓼":"MATHEMATICAL BOLD SCRIPT SMALL S","𝓽":"MATHEMATICAL BOLD SCRIPT SMALL T","𝓾":"MATHEMATICAL BOLD SCRIPT SMALL U","𝓿":"MATHEMATICAL BOLD SCRIPT SMALL V","𝔀":"MATHEMATICAL BOLD SCRIPT SMALL W","𝔁":"MATHEMATICAL BOLD SCRIPT SMALL X","𝔂":"MATHEMATICAL BOLD SCRIPT SMALL Y","𝔃":"MATHEMATICAL BOLD SCRIPT SMALL Z","𝔸":"MATHEMATICAL DOUBLE-STRUCK CAPITAL A","𝔹":"MATHEMATICAL DOUBLE-STRUCK CAPITAL B","ℂ":"DOUBLE-STRUCK CAPITAL C","𝔻":"MATHEMATICAL DOUBLE-STRUCK CAPITAL D","𝔼":"MATHEMATICAL DOUBLE-STRUCK CAPITAL E","𝔽":"MATHEMATICAL DOUBLE-STRUCK CAPITAL F","𝔾":"MATHEMATICAL DOUBLE-STRUCK CAPITAL G","ℍ":"DOUBLE-STRUCK CAPITAL H","𝕀":"MATHEMATICAL DOUBLE-STRUCK CAPITAL I","𝕁":"MATHEMATICAL DOUBLE-STRUCK CAPITAL J","𝕂":"MATHEMATICAL DOUBLE-STRUCK CAPITAL K","𝕃":"MATHEMATICAL DOUBLE-STRUCK CAPITAL L","𝕄":"MATHEMATICAL DOUBLE-STRUCK CAPITAL M","ℕ":"DOUBLE-STRUCK CAPITAL N","𝕆":"MATHEMATICAL DOUBLE-STRUCK CAPITAL O","ℙ":"DOUBLE-STRUCK CAPITAL P","ℚ":"DOUBLE-STRUCK CAPITAL Q","ℝ":"DOUBLE-STRUCK CAPITAL R","𝕊":"MATHEMATICAL DOUBLE-STRUCK CAPITAL S","𝕋":"MATHEMATICAL DOUBLE-STRUCK CAPITAL T","𝕌":"MATHEMATICAL DOUBLE-STRUCK CAPITAL U","𝕍":"MATHEMATICAL DOUBLE-STRUCK CAPITAL V","𝕎":"MATHEMATICAL DOUBLE-STRUCK CAPITAL W","𝕏":"MATHEMATICAL DOUBLE-STRUCK CAPITAL X","𝕐":"MATHEMATICAL DOUBLE-STRUCK CAPITAL Y","ℤ":"DOUBLE-STRUCK CAPITAL Z","𝕒":"MATHEMATICAL DOUBLE-STRUCK SMALL A","𝕓":"MATHEMATICAL DOUBLE-STRUCK SMALL B","𝕔":"MATHEMATICAL DOUBLE-STRUCK SMALL C","𝕕":"MATHEMATICAL DOUBLE-STRUCK SMALL D","𝕖":"MATHEMATICAL DOUBLE-STRUCK SMALL E","𝕗":"MATHEMATICAL DOUBLE-STRUCK SMALL F","𝕘":"MATHEMATICAL DOUBLE-STRUCK SMALL G","𝕙":"MATHEMATICAL DOUBLE-STRUCK SMALL H","𝕚":"MATHEMATICAL DOUBLE-STRUCK SMALL I","𝕛":"MATHEMATICAL DOUBLE-STRUCK SMALL J","𝕜":"MATHEMATICAL DOUBLE-STRUCK SMALL K","𝕝":"MATHEMATICAL DOUBLE-STRUCK SMALL L","𝕞":"MATHEMATICAL DOUBLE-STRUCK SMALL M","𝕟":"MATHEMATICAL DOUBLE-STRUCK SMALL N","𝕠":"MATHEMATICAL DOUBLE-STRUCK SMALL O","𝕡":"MATHEMATICAL DOUBLE-STRUCK SMALL P","𝕢":"MATHEMATICAL DOUBLE-STRUCK SMALL Q","𝕣":"MATHEMATICAL DOUBLE-STRUCK SMALL R","𝕤":"MATHEMATICAL DOUBLE-STRUCK SMALL S","𝕥":"MATHEMATICAL DOUBLE-STRUCK SMALL T","𝕦":"MATHEMATICAL DOUBLE-STRUCK SMALL U","𝕧":"MATHEMATICAL DOUBLE-STRUCK SMALL V","𝕨":"MATHEMATICAL DOUBLE-STRUCK SMALL W","𝕩":"MATHEMATICAL DOUBLE-STRUCK SMALL X","𝕪":"MATHEMATICAL DOUBLE-STRUCK SMALL Y","𝕫":"MATHEMATICAL DOUBLE-STRUCK SMALL Z","𝟘":"MATHEMATICAL DOUBLE-STRUCK DIGIT ZERO","𝟙":"MATHEMATICAL DOUBLE-STRUCK DIGIT ONE","𝟚":"MATHEMATICAL DOUBLE-STRUCK DIGIT TWO","𝟛":"MATHEMATICAL DOUBLE-STRUCK DIGIT THREE","𝟜":"MATHEMATICAL DOUBLE-STRUCK DIGIT FOUR","𝟝":"MATHEMATICAL DOUBLE-STRUCK DIGIT FIVE","𝟞":"MATHEMATICAL DOUBLE-STRUCK DIGIT SIX","𝟟":"MATHEMATICAL DOUBLE-STRUCK DIGIT SEVEN","𝟠":"MATHEMATICAL DOUBLE-STRUCK DIGIT EIGHT","𝟡":"MATHEMATICAL DOUBLE-STRUCK DIGIT NINE","𝐀":"MATHEMATICAL BOLD CAPITAL A","𝐁":"MATHEMATICAL BOLD CAPITAL B","𝐂":"MATHEMATICAL BOLD CAPITAL C","𝐃":"MATHEMATICAL BOLD CAPITAL D","𝐄":"MATHEMATICAL BOLD CAPITAL E","𝐅":"MATHEMATICAL BOLD CAPITAL F","𝐆":"MATHEMATICAL BOLD CAPITAL G","𝐇":"MATHEMATICAL BOLD CAPITAL H","𝐈":"MATHEMATICAL BOLD CAPITAL I","𝐉":"MATHEMATICAL BOLD CAPITAL J","𝐊":"MATHEMATICAL BOLD CAPITAL K","𝐋":"MATHEMATICAL BOLD CAPITAL L","𝐌":"MATHEMATICAL BOLD CAPITAL M","𝐍":"MATHEMATICAL BOLD CAPITAL N","𝐎":"MATHEMATICAL BOLD CAPITAL O","𝐏":"MATHEMATICAL BOLD CAPITAL P","𝐐":"MATHEMATICAL BOLD CAPITAL Q","𝐑":"MATHEMATICAL BOLD CAPITAL R","𝐒":"MATHEMATICAL BOLD CAPITAL S","𝐓":"MATHEMATICAL BOLD CAPITAL T","𝐔":"MATHEMATICAL BOLD CAPITAL U","𝐕":"MATHEMATICAL BOLD CAPITAL V","𝐖":"MATHEMATICAL BOLD CAPITAL W","𝐗":"MATHEMATICAL BOLD CAPITAL X","𝐘":"MATHEMATICAL BOLD CAPITAL Y","𝐙":"MATHEMATICAL BOLD CAPITAL Z","𝐚":"MATHEMATICAL BOLD SMALL A","𝐛":"MATHEMATICAL BOLD SMALL B","𝐜":"MATHEMATICAL BOLD SMALL C","𝐝":"MATHEMATICAL BOLD SMALL D","𝐞":"MATHEMATICAL BOLD SMALL E","𝐟":"MATHEMATICAL BOLD SMALL F","𝐠":"MATHEMATICAL BOLD SMALL G","𝐡":"MATHEMATICAL BOLD SMALL H","𝐢":"MATHEMATICAL BOLD SMALL I","𝐣":"MATHEMATICAL BOLD SMALL J","𝐤":"MATHEMATICAL BOLD SMALL K","𝐥":"MATHEMATICAL BOLD SMALL L","𝐦":"MATHEMATICAL BOLD SMALL M","𝐧":"MATHEMATICAL BOLD SMALL N","𝐨":"MATHEMATICAL BOLD SMALL O","𝐩":"MATHEMATICAL BOLD SMALL P","𝐪":"MATHEMATICAL BOLD SMALL Q","𝐫":"MATHEMATICAL BOLD SMALL R","𝐬":"MATHEMATICAL BOLD SMALL S","𝐭":"MATHEMATICAL BOLD SMALL T","𝐮":"MATHEMATICAL BOLD SMALL U","𝐯":"MATHEMATICAL BOLD SMALL V","𝐰":"MATHEMATICAL BOLD SMALL W","𝐱":"MATHEMATICAL BOLD SMALL X","𝐲":"MATHEMATICAL BOLD SMALL Y","𝐳":"MATHEMATICAL BOLD SMALL Z","𝟎":"MATHEMATICAL BOLD DIGIT ZERO","𝟏":"MATHEMATICAL BOLD DIGIT ONE","𝟐":"MATHEMATICAL BOLD DIGIT TWO","𝟑":"MATHEMATICAL BOLD DIGIT THREE","𝟒":"MATHEMATICAL BOLD DIGIT FOUR","𝟓":"MATHEMATICAL BOLD DIGIT FIVE","𝟔":"MATHEMATICAL BOLD DIGIT SIX","𝟕":"MATHEMATICAL BOLD DIGIT SEVEN","𝟖":"MATHEMATICAL BOLD DIGIT EIGHT","𝟗":"MATHEMATICAL BOLD DIGIT NINE","𝐴":"MATHEMATICAL ITALIC CAPITAL A","𝐵":"MATHEMATICAL ITALIC CAPITAL B","𝐶":"MATHEMATICAL ITALIC CAPITAL C","𝐷":"MATHEMATICAL ITALIC CAPITAL D","𝐸":"MATHEMATICAL ITALIC CAPITAL E","𝐹":"MATHEMATICAL ITALIC CAPITAL F","𝐺":"MATHEMATICAL ITALIC CAPITAL G","𝐻":"MATHEMATICAL ITALIC CAPITAL H","𝐼":"MATHEMATICAL ITALIC CAPITAL I","𝐽":"MATHEMATICAL ITALIC CAPITAL J","𝐾":"MATHEMATICAL ITALIC CAPITAL K","𝐿":"MATHEMATICAL ITALIC CAPITAL L","𝑀":"MATHEMATICAL ITALIC CAPITAL M","𝑁":"MATHEMATICAL ITALIC CAPITAL N","𝑂":"MATHEMATICAL ITALIC CAPITAL O","𝑃":"MATHEMATICAL ITALIC CAPITAL P","𝑄":"MATHEMATICAL ITALIC CAPITAL Q","𝑅":"MATHEMATICAL ITALIC CAPITAL R","𝑆":"MATHEMATICAL ITALIC CAPITAL S","𝑇":"MATHEMATICAL ITALIC CAPITAL T","𝑈":"MATHEMATICAL ITALIC CAPITAL U","𝑉":"MATHEMATICAL ITALIC CAPITAL V","𝑊":"MATHEMATICAL ITALIC CAPITAL W","𝑋":"MATHEMATICAL ITALIC CAPITAL X","𝑌":"MATHEMATICAL ITALIC CAPITAL Y","𝑍":"MATHEMATICAL ITALIC CAPITAL Z","𝑎":"MATHEMATICAL ITALIC SMALL A","𝑏":"MATHEMATICAL ITALIC SMALL B","𝑐":"MATHEMATICAL ITALIC SMALL C","𝑑":"MATHEMATICAL ITALIC SMALL D","𝑒":"MATHEMATICAL ITALIC SMALL E","𝑓":"MATHEMATICAL ITALIC SMALL F","𝑔":"MATHEMATICAL ITALIC SMALL G","ℎ":"PLANCK CONSTANT","𝑖":"MATHEMATICAL ITALIC SMALL I","𝑗":"MATHEMATICAL ITALIC SMALL J","𝑘":"MATHEMATICAL ITALIC SMALL K","𝑙":"MATHEMATICAL ITALIC SMALL L","𝑚":"MATHEMATICAL ITALIC SMALL M","𝑛":"MATHEMATICAL ITALIC SMALL N","𝑜":"MATHEMATICAL ITALIC SMALL O","𝑝":"MATHEMATICAL ITALIC SMALL P","𝑞":"MATHEMATICAL ITALIC SMALL Q","𝑟":"MATHEMATICAL ITALIC SMALL R","𝑠":"MATHEMATICAL ITALIC SMALL S","𝑡":"MATHEMATICAL ITALIC SMALL T","𝑢":"MATHEMATICAL ITALIC SMALL U","𝑣":"MATHEMATICAL ITALIC SMALL V","𝑤":"MATHEMATICAL ITALIC SMALL W","𝑥":"MATHEMATICAL ITALIC SMALL X","𝑦":"MATHEMATICAL ITALIC SMALL Y","𝑧":"MATHEMATICAL ITALIC SMALL Z","𝑨":"MATHEMATICAL BOLD ITALIC CAPITAL A","𝑩":"MATHEMATICAL BOLD ITALIC CAPITAL B","𝑪":"MATHEMATICAL BOLD ITALIC CAPITAL C","𝑫":"MATHEMATICAL BOLD ITALIC CAPITAL D","𝑬":"MATHEMATICAL BOLD ITALIC CAPITAL E","𝑭":"MATHEMATICAL BOLD ITALIC CAPITAL F","𝑮":"MATHEMATICAL BOLD ITALIC CAPITAL G","𝑯":"MATHEMATICAL BOLD ITALIC CAPITAL H","𝑰":"MATHEMATICAL BOLD ITALIC CAPITAL I","𝑱":"MATHEMATICAL BOLD ITALIC CAPITAL J","𝑲":"MATHEMATICAL BOLD ITALIC CAPITAL K","𝑳":"MATHEMATICAL BOLD ITALIC CAPITAL L","𝑴":"MATHEMATICAL BOLD ITALIC CAPITAL M","𝑵":"MATHEMATICAL BOLD ITALIC CAPITAL N","𝑶":"MATHEMATICAL BOLD ITALIC CAPITAL O","𝑷":"MATHEMATICAL BOLD ITALIC CAPITAL P","𝑸":"MATHEMATICAL BOLD ITALIC CAPITAL Q","𝑹":"MATHEMATICAL BOLD ITALIC CAPITAL R","𝑺":"MATHEMATICAL BOLD ITALIC CAPITAL S","𝑻":"MATHEMATICAL BOLD ITALIC CAPITAL T","𝑼":"MATHEMATICAL BOLD ITALIC CAPITAL U","𝑽":"MATHEMATICAL BOLD ITALIC CAPITAL V","𝑾":"MATHEMATICAL BOLD ITALIC CAPITAL W","𝑿":"MATHEMATICAL BOLD ITALIC CAPITAL X","𝒀":"MATHEMATICAL BOLD ITALIC CAPITAL Y","𝒁":"MATHEMATICAL BOLD ITALIC CAPITAL Z","𝒂":"MATHEMATICAL BOLD ITALIC SMALL A","𝒃":"MATHEMATICAL BOLD ITALIC SMALL B","𝒄":"MATHEMATICAL BOLD ITALIC SMALL C","𝒅":"MATHEMATICAL BOLD ITALIC SMALL D","𝒆":"MATHEMATICAL BOLD ITALIC SMALL E","𝒇":"MATHEMATICAL BOLD ITALIC SMALL F","𝒈":"MATHEMATICAL BOLD ITALIC SMALL G","𝒉":"MATHEMATICAL BOLD ITALIC SMALL H","𝒊":"MATHEMATICAL BOLD ITALIC SMALL I","𝒋":"MATHEMATICAL BOLD ITALIC SMALL J","𝒌":"MATHEMATICAL BOLD ITALIC SMALL K","𝒍":"MATHEMATICAL BOLD ITALIC SMALL L","𝒎":"MATHEMATICAL BOLD ITALIC SMALL M","𝒏":"MATHEMATICAL BOLD ITALIC SMALL N","𝒐":"MATHEMATICAL BOLD ITALIC SMALL O","𝒑":"MATHEMATICAL BOLD ITALIC SMALL P","𝒒":"MATHEMATICAL BOLD ITALIC SMALL Q","𝒓":"MATHEMATICAL BOLD ITALIC SMALL R","𝒔":"MATHEMATICAL BOLD ITALIC SMALL S","𝒕":"MATHEMATICAL BOLD ITALIC SMALL T","𝒖":"MATHEMATICAL BOLD ITALIC SMALL U","𝒗":"MATHEMATICAL BOLD ITALIC SMALL V","𝒘":"MATHEMATICAL BOLD ITALIC SMALL W","𝒙":"MATHEMATICAL BOLD ITALIC SMALL X","𝒚":"MATHEMATICAL BOLD ITALIC SMALL Y","𝒛":"MATHEMATICAL BOLD ITALIC SMALL Z","𝖠":"MATHEMATICAL SANS-SERIF CAPITAL A","𝖡":"MATHEMATICAL SANS-SERIF CAPITAL B","𝖢":"MATHEMATICAL SANS-SERIF CAPITAL C","𝖣":"MATHEMATICAL SANS-SERIF CAPITAL D","𝖤":"MATHEMATICAL SANS-SERIF CAPITAL E","𝖥":"MATHEMATICAL SANS-SERIF CAPITAL F","𝖦":"MATHEMATICAL SANS-SERIF CAPITAL G","𝖧":"MATHEMATICAL SANS-SERIF CAPITAL H","𝖨":"MATHEMATICAL SANS-SERIF CAPITAL I","𝖩":"MATHEMATICAL SANS-SERIF CAPITAL J","𝖪":"MATHEMATICAL SANS-SERIF CAPITAL K","𝖫":"MATHEMATICAL SANS-SERIF CAPITAL L","𝖬":"MATHEMATICAL SANS-SERIF CAPITAL M","𝖭":"MATHEMATICAL SANS-SERIF CAPITAL N","𝖮":"MATHEMATICAL SANS-SERIF CAPITAL O","𝖯":"MATHEMATICAL SANS-SERIF CAPITAL P","𝖰":"MATHEMATICAL SANS-SERIF CAPITAL Q","𝖱":"MATHEMATICAL SANS-SERIF CAPITAL R","𝖲":"MATHEMATICAL SANS-SERIF CAPITAL S","𝖳":"MATHEMATICAL SANS-SERIF CAPITAL T","𝖴":"MATHEMATICAL SANS-SERIF CAPITAL U","𝖵":"MATHEMATICAL SANS-SERIF CAPITAL V","𝖶":"MATHEMATICAL SANS-SERIF CAPITAL W","𝖷":"MATHEMATICAL SANS-SERIF CAPITAL X","𝖸":"MATHEMATICAL SANS-SERIF CAPITAL Y","𝖹":"MATHEMATICAL SANS-SERIF CAPITAL Z","𝖺":"MATHEMATICAL SANS-SERIF SMALL A","𝖻":"MATHEMATICAL SANS-SERIF SMALL B","𝖼":"MATHEMATICAL SANS-SERIF SMALL C","𝖽":"MATHEMATICAL SANS-SERIF SMALL D","𝖾":"MATHEMATICAL SANS-SERIF SMALL E","𝖿":"MATHEMATICAL SANS-SERIF SMALL F","𝗀":"MATHEMATICAL SANS-SERIF SMALL G","𝗁":"MATHEMATICAL SANS-SERIF SMALL H","𝗂":"MATHEMATICAL SANS-SERIF SMALL I","𝗃":"MATHEMATICAL SANS-SERIF SMALL J","𝗄":"MATHEMATICAL SANS-SERIF SMALL K","𝗅":"MATHEMATICAL SANS-SERIF SMALL L","𝗆":"MATHEMATICAL SANS-SERIF SMALL M","𝗇":"MATHEMATICAL SANS-SERIF SMALL N","𝗈":"MATHEMATICAL SANS-SERIF SMALL O","𝗉":"MATHEMATICAL SANS-SERIF SMALL P","𝗊":"MATHEMATICAL SANS-SERIF SMALL Q","𝗋":"MATHEMATICAL SANS-SERIF SMALL R","𝗌":"MATHEMATICAL SANS-SERIF SMALL S","𝗍":"MATHEMATICAL SANS-SERIF SMALL T","𝗎":"MATHEMATICAL SANS-SERIF SMALL U","𝗏":"MATHEMATICAL SANS-SERIF SMALL V","𝗐":"MATHEMATICAL SANS-SERIF SMALL W","𝗑":"MATHEMATICAL SANS-SERIF SMALL X","𝗒":"MATHEMATICAL SANS-SERIF SMALL Y","𝗓":"MATHEMATICAL SANS-SERIF SMALL Z","𝟢":"MATHEMATICAL SANS-SERIF DIGIT ZERO","𝟣":"MATHEMATICAL SANS-SERIF DIGIT ONE","𝟤":"MATHEMATICAL SANS-SERIF DIGIT TWO","𝟥":"MATHEMATICAL SANS-SERIF DIGIT THREE","𝟦":"MATHEMATICAL SANS-SERIF DIGIT FOUR","𝟧":"MATHEMATICAL SANS-SERIF DIGIT FIVE","𝟨":"MATHEMATICAL SANS-SERIF DIGIT SIX","𝟩":"MATHEMATICAL SANS-SERIF DIGIT SEVEN","𝟪":"MATHEMATICAL SANS-SERIF DIGIT EIGHT","𝟫":"MATHEMATICAL SANS-SERIF DIGIT NINE","𝗔":"MATHEMATICAL SANS-SERIF BOLD CAPITAL A","𝗕":"MATHEMATICAL SANS-SERIF BOLD CAPITAL B","𝗖":"MATHEMATICAL SANS-SERIF BOLD CAPITAL C","𝗗":"MATHEMATICAL SANS-SERIF BOLD CAPITAL D","𝗘":"MATHEMATICAL SANS-SERIF BOLD CAPITAL E","𝗙":"MATHEMATICAL SANS-SERIF BOLD CAPITAL F","𝗚":"MATHEMATICAL SANS-SERIF BOLD CAPITAL G","𝗛":"MATHEMATICAL SANS-SERIF BOLD CAPITAL H","𝗜":"MATHEMATICAL SANS-SERIF BOLD CAPITAL I","𝗝":"MATHEMATICAL SANS-SERIF BOLD CAPITAL J","𝗞":"MATHEMATICAL SANS-SERIF BOLD CAPITAL K","𝗟":"MATHEMATICAL SANS-SERIF BOLD CAPITAL L","𝗠":"MATHEMATICAL SANS-SERIF BOLD CAPITAL M","𝗡":"MATHEMATICAL SANS-SERIF BOLD CAPITAL N","𝗢":"MATHEMATICAL SANS-SERIF BOLD CAPITAL O","𝗣":"MATHEMATICAL SANS-SERIF BOLD CAPITAL P","𝗤":"MATHEMATICAL SANS-SERIF BOLD CAPITAL Q","𝗥":"MATHEMATICAL SANS-SERIF BOLD CAPITAL R","𝗦":"MATHEMATICAL SANS-SERIF BOLD CAPITAL S","𝗧":"MATHEMATICAL SANS-SERIF BOLD CAPITAL T","𝗨":"MATHEMATICAL SANS-SERIF BOLD CAPITAL U","𝗩":"MATHEMATICAL SANS-SERIF BOLD CAPITAL V","𝗪":"MATHEMATICAL SANS-SERIF BOLD CAPITAL W","𝗫":"MATHEMATICAL SANS-SERIF BOLD CAPITAL X","𝗬":"MATHEMATICAL SANS-SERIF BOLD CAPITAL Y","𝗭":"MATHEMATICAL SANS-SERIF BOLD CAPITAL Z","𝗮":"MATHEMATICAL SANS-SERIF BOLD SMALL A","𝗯":"MATHEMATICAL SANS-SERIF BOLD SMALL B","𝗰":"MATHEMATICAL SANS-SERIF BOLD SMALL C","𝗱":"MATHEMATICAL SANS-SERIF BOLD SMALL D","𝗲":"MATHEMATICAL SANS-SERIF BOLD SMALL E","𝗳":"MATHEMATICAL SANS-SERIF BOLD SMALL F","𝗴":"MATHEMATICAL SANS-SERIF BOLD SMALL G","𝗵":"MATHEMATICAL SANS-SERIF BOLD SMALL H","𝗶":"MATHEMATICAL SANS-SERIF BOLD SMALL I","𝗷":"MATHEMATICAL SANS-SERIF BOLD SMALL J","𝗸":"MATHEMATICAL SANS-SERIF BOLD SMALL K","𝗹":"MATHEMATICAL SANS-SERIF BOLD SMALL L","𝗺":"MATHEMATICAL SANS-SERIF BOLD SMALL M","𝗻":"MATHEMATICAL SANS-SERIF BOLD SMALL N","𝗼":"MATHEMATICAL SANS-SERIF BOLD SMALL O","𝗽":"MATHEMATICAL SANS-SERIF BOLD SMALL P","𝗾":"MATHEMATICAL SANS-SERIF BOLD SMALL Q","𝗿":"MATHEMATICAL SANS-SERIF BOLD SMALL R","𝘀":"MATHEMATICAL SANS-SERIF BOLD SMALL S","𝘁":"MATHEMATICAL SANS-SERIF BOLD SMALL T","𝘂":"MATHEMATICAL SANS-SERIF BOLD SMALL U","𝘃":"MATHEMATICAL SANS-SERIF BOLD SMALL V","𝘄":"MATHEMATICAL SANS-SERIF BOLD SMALL W","𝘅":"MATHEMATICAL SANS-SERIF BOLD SMALL X","𝘆":"MATHEMATICAL SANS-SERIF BOLD SMALL Y","𝘇":"MATHEMATICAL SANS-SERIF BOLD SMALL Z","𝟬":"MATHEMATICAL SANS-SERIF BOLD DIGIT ZERO","𝟭":"MATHEMATICAL SANS-SERIF BOLD DIGIT ONE","𝟮":"MATHEMATICAL SANS-SERIF BOLD DIGIT TWO","𝟯":"MATHEMATICAL SANS-SERIF BOLD DIGIT THREE","𝟰":"MATHEMATICAL SANS-SERIF BOLD DIGIT FOUR","𝟱":"MATHEMATICAL SANS-SERIF BOLD DIGIT FIVE","𝟲":"MATHEMATICAL SANS-SERIF BOLD DIGIT SIX","𝟳":"MATHEMATICAL SANS-SERIF BOLD DIGIT SEVEN","𝟴":"MATHEMATICAL SANS-SERIF BOLD DIGIT EIGHT","𝟵":"MATHEMATICAL SANS-SERIF BOLD DIGIT NINE","𝘈":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL A","𝘉":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL B","𝘊":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL C","𝘋":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL D","𝘌":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL E","𝘍":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL F","𝘎":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL G","𝘏":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL H","𝘐":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL I","𝘑":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL J","𝘒":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL K","𝘓":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL L","𝘔":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL M","𝘕":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL N","𝘖":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL O","𝘗":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL P","𝘘":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL Q","𝘙":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL R","𝘚":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL S","𝘛":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL T","𝘜":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL U","𝘝":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL V","𝘞":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL W","𝘟":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL X","𝘠":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL Y","𝘡":"MATHEMATICAL SANS-SERIF ITALIC CAPITAL Z","𝘢":"MATHEMATICAL SANS-SERIF ITALIC SMALL A","𝘣":"MATHEMATICAL SANS-SERIF ITALIC SMALL B","𝘤":"MATHEMATICAL SANS-SERIF ITALIC SMALL C","𝘥":"MATHEMATICAL SANS-SERIF ITALIC SMALL D","𝘦":"MATHEMATICAL SANS-SERIF ITALIC SMALL E","𝘧":"MATHEMATICAL SANS-SERIF ITALIC SMALL F","𝘨":"MATHEMATICAL SANS-SERIF ITALIC SMALL G","𝘩":"MATHEMATICAL SANS-SERIF ITALIC SMALL H","𝘪":"MATHEMATICAL SANS-SERIF ITALIC SMALL I","𝘫":"MATHEMATICAL SANS-SERIF ITALIC SMALL J","𝘬":"MATHEMATICAL SANS-SERIF ITALIC SMALL K","𝘭":"MATHEMATICAL SANS-SERIF ITALIC SMALL L","𝘮":"MATHEMATICAL SANS-SERIF ITALIC SMALL M","𝘯":"MATHEMATICAL SANS-SERIF ITALIC SMALL N","𝘰":"MATHEMATICAL SANS-SERIF ITALIC SMALL O","𝘱":"MATHEMATICAL SANS-SERIF ITALIC SMALL P","𝘲":"MATHEMATICAL SANS-SERIF ITALIC SMALL Q","𝘳":"MATHEMATICAL SANS-SERIF ITALIC SMALL R","𝘴":"MATHEMATICAL SANS-SERIF ITALIC SMALL S","𝘵":"MATHEMATICAL SANS-SERIF ITALIC SMALL T","𝘶":"MATHEMATICAL SANS-SERIF ITALIC SMALL U","𝘷":"MATHEMATICAL SANS-SERIF ITALIC SMALL V","𝘸":"MATHEMATICAL SANS-SERIF ITALIC SMALL W","𝘹":"MATHEMATICAL SANS-SERIF ITALIC SMALL X","𝘺":"MATHEMATICAL SANS-SERIF ITALIC SMALL Y","𝘻":"MATHEMATICAL SANS-SERIF ITALIC SMALL Z","𝘼":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL A","𝘽":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL B","𝘾":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL C","𝘿":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL D","𝙀":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL E","𝙁":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL F","𝙂":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL G","𝙃":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL H","𝙄":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL I","𝙅":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL J","𝙆":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL K","𝙇":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL L","𝙈":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL M","𝙉":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL N","𝙊":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL O","𝙋":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL P","𝙌":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Q","𝙍":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL R","𝙎":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL S","𝙏":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL T","𝙐":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL U","𝙑":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL V","𝙒":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL W","𝙓":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL X","𝙔":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Y","𝙕":"MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Z","𝙖":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL A","𝙗":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL B","𝙘":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL C","𝙙":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL D","𝙚":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL E","𝙛":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL F","𝙜":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL G","𝙝":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL H","𝙞":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL I","𝙟":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL J","𝙠":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL K","𝙡":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL L","𝙢":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL M","𝙣":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL N","𝙤":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL O","𝙥":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL P","𝙦":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Q","𝙧":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL R","𝙨":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL S","𝙩":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL T","𝙪":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL U","𝙫":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL V","𝙬":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL W","𝙭":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL X","𝙮":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Y","𝙯":"MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Z","𝙰":"MATHEMATICAL MONOSPACE CAPITAL A","𝙱":"MATHEMATICAL MONOSPACE CAPITAL B","𝙲":"MATHEMATICAL MONOSPACE CAPITAL C","𝙳":"MATHEMATICAL MONOSPACE CAPITAL D","𝙴":"MATHEMATICAL MONOSPACE CAPITAL E","𝙵":"MATHEMATICAL MONOSPACE CAPITAL F","𝙶":"MATHEMATICAL MONOSPACE CAPITAL G","𝙷":"MATHEMATICAL MONOSPACE CAPITAL H","𝙸":"MATHEMATICAL MONOSPACE CAPITAL I","𝙹":"MATHEMATICAL MONOSPACE CAPITAL J","𝙺":"MATHEMATICAL MONOSPACE CAPITAL K","𝙻":"MATHEMATICAL MONOSPACE CAPITAL L","𝙼":"MATHEMATICAL MONOSPACE CAPITAL M","𝙽":"MATHEMATICAL MONOSPACE CAPITAL N","𝙾":"MATHEMATICAL MONOSPACE CAPITAL O","𝙿":"MATHEMATICAL MONOSPACE CAPITAL P","𝚀":"MATHEMATICAL MONOSPACE CAPITAL Q","𝚁":"MATHEMATICAL MONOSPACE CAPITAL R","𝚂":"MATHEMATICAL MONOSPACE CAPITAL S","𝚃":"MATHEMATICAL MONOSPACE CAPITAL T","𝚄":"MATHEMATICAL MONOSPACE CAPITAL U","𝚅":"MATHEMATICAL MONOSPACE CAPITAL V","𝚆":"MATHEMATICAL MONOSPACE CAPITAL W","𝚇":"MATHEMATICAL MONOSPACE CAPITAL X","𝚈":"MATHEMATICAL MONOSPACE CAPITAL Y","𝚉":"MATHEMATICAL MONOSPACE CAPITAL Z","𝚊":"MATHEMATICAL MONOSPACE SMALL A","𝚋":"MATHEMATICAL MONOSPACE SMALL B","𝚌":"MATHEMATICAL MONOSPACE SMALL C","𝚍":"MATHEMATICAL MONOSPACE SMALL D","𝚎":"MATHEMATICAL MONOSPACE SMALL E","𝚏":"MATHEMATICAL MONOSPACE SMALL F","𝚐":"MATHEMATICAL MONOSPACE SMALL G","𝚑":"MATHEMATICAL MONOSPACE SMALL H","𝚒":"MATHEMATICAL MONOSPACE SMALL I","𝚓":"MATHEMATICAL MONOSPACE SMALL J","𝚔":"MATHEMATICAL MONOSPACE SMALL K","𝚕":"MATHEMATICAL MONOSPACE SMALL L","𝚖":"MATHEMATICAL MONOSPACE SMALL M","𝚗":"MATHEMATICAL MONOSPACE SMALL N","𝚘":"MATHEMATICAL MONOSPACE SMALL O","𝚙":"MATHEMATICAL MONOSPACE SMALL P","𝚚":"MATHEMATICAL MONOSPACE SMALL Q","𝚛":"MATHEMATICAL MONOSPACE SMALL R","𝚜":"MATHEMATICAL MONOSPACE SMALL S","𝚝":"MATHEMATICAL MONOSPACE SMALL T","𝚞":"MATHEMATICAL MONOSPACE SMALL U","𝚟":"MATHEMATICAL MONOSPACE SMALL V","𝚠":"MATHEMATICAL MONOSPACE SMALL W","𝚡":"MATHEMATICAL MONOSPACE SMALL X","𝚢":"MATHEMATICAL MONOSPACE SMALL Y","𝚣":"MATHEMATICAL MONOSPACE SMALL Z","𝟶":"MATHEMATICAL MONOSPACE DIGIT ZERO","𝟷":"MATHEMATICAL MONOSPACE DIGIT ONE","𝟸":"MATHEMATICAL MONOSPACE DIGIT TWO","𝟹":"MATHEMATICAL MONOSPACE DIGIT THREE","𝟺":"MATHEMATICAL MONOSPACE DIGIT FOUR","𝟻":"MATHEMATICAL MONOSPACE DIGIT FIVE","𝟼":"MATHEMATICAL MONOSPACE DIGIT SIX","𝟽":"MATHEMATICAL MONOSPACE DIGIT SEVEN","𝟾":"MATHEMATICAL MONOSPACE DIGIT EIGHT","𝟿":"MATHEMATICAL MONOSPACE DIGIT NINE","Ａ":"FULLWIDTH LATIN CAPITAL LETTER A","Ｂ":"FULLWIDTH LATIN CAPITAL LETTER B","Ｃ":"FULLWIDTH LATIN CAPITAL LETTER C","Ｄ":"FULLWIDTH LATIN CAPITAL LETTER D","Ｅ":"FULLWIDTH LATIN CAPITAL LETTER E","Ｆ":"FULLWIDTH LATIN CAPITAL LETTER F","Ｇ":"FULLWIDTH LATIN CAPITAL LETTER G","Ｈ":"FULLWIDTH LATIN CAPITAL LETTER H","Ｉ":"FULLWIDTH LATIN CAPITAL LETTER I","Ｊ":"FULLWIDTH LATIN CAPITAL LETTER J","Ｋ":"FULLWIDTH LATIN CAPITAL LETTER K","Ｌ":"FULLWIDTH LATIN CAPITAL LETTER L","Ｍ":"FULLWIDTH LATIN CAPITAL LETTER M","Ｎ":"FULLWIDTH LATIN CAPITAL LETTER N","Ｏ":"FULLWIDTH LATIN CAPITAL LETTER O","Ｐ":"FULLWIDTH LATIN CAPITAL LETTER P","Ｑ":"FULLWIDTH LATIN CAPITAL LETTER Q","Ｒ":"FULLWIDTH LATIN CAPITAL LETTER R","Ｓ":"FULLWIDTH LATIN CAPITAL LETTER S","Ｔ":"FULLWIDTH LATIN CAPITAL LETTER T","Ｕ":"FULLWIDTH LATIN CAPITAL LETTER U","Ｖ":"FULLWIDTH LATIN CAPITAL LETTER V","Ｗ":"FULLWIDTH LATIN CAPITAL LETTER W","Ｘ":"FULLWIDTH LATIN CAPITAL LETTER X","Ｙ":"FULLWIDTH LATIN CAPITAL LETTER Y","Ｚ":"FULLWIDTH LATIN CAPITAL LETTER Z","ａ":"FULLWIDTH LATIN SMALL LETTER A","ｂ":"FULLWIDTH LATIN SMALL LETTER B","ｃ":"FULLWIDTH LATIN SMALL LETTER C","ｄ":"FULLWIDTH LATIN SMALL LETTER D","ｅ":"FULLWIDTH LATIN SMALL LETTER E","ｆ":"FULLWIDTH LATIN SMALL LETTER F","ｇ":"FULLWIDTH LATIN SMALL LETTER G","ｈ":"FULLWIDTH LATIN SMALL LETTER H","ｉ":"FULLWIDTH LATIN SMALL LETTER I","ｊ":"FULLWIDTH LATIN SMALL LETTER J","ｋ":"FULLWIDTH LATIN SMALL LETTER K","ｌ":"FULLWIDTH LATIN SMALL LETTER L","ｍ":"FULLWIDTH LATIN SMALL LETTER M","ｎ":"FULLWIDTH LATIN SMALL LETTER N","ｏ":"FULLWIDTH LATIN SMALL LETTER O","ｐ":"FULLWIDTH LATIN SMALL LETTER P","ｑ":"FULLWIDTH LATIN SMALL LETTER Q","ｒ":"FULLWIDTH LATIN SMALL LETTER R","ｓ":"FULLWIDTH LATIN SMALL LETTER S","ｔ":"FULLWIDTH LATIN SMALL LETTER T","ｕ":"FULLWIDTH LATIN SMALL LETTER U","ｖ":"FULLWIDTH LATIN SMALL LETTER V","ｗ":"FULLWIDTH LATIN SMALL LETTER W","ｘ":"FULLWIDTH LATIN SMALL LETTER X","ｙ":"FULLWIDTH LATIN SMALL LETTER Y","ｚ":"FULLWIDTH LATIN SMALL LETTER Z","０":"FULLWIDTH DIGIT ZERO","１":"FULLWIDTH DIGIT ONE","２":"FULLWIDTH DIGIT TWO","３":"FULLWIDTH DIGIT THREE","４":"FULLWIDTH DIGIT FOUR","５":"FULLWIDTH DIGIT FIVE","６":"FULLWIDTH DIGIT SIX","７":"FULLWIDTH DIGIT SEVEN","８":"FULLWIDTH DIGIT EIGHT","９":"FULLWIDTH DIGIT NINE"},"original":{"plain":"the diacritics are now free","encoded":"𝔱̷̛̝̈́𝔥̶͖̈́𝔢̵̪͆ 𝔡̴̹̄𝔦̸̙̀𝔞̶̽͜𝔠̷̤͋𝔯̶̱͊𝔦̵̲̑𝔱̴̱͝𝔦̴̬͘𝔠̶͇̀𝔰̵̮͝ 𝔞̵̢͛𝔯̴͍͝𝔢̴͉̀ 𝔫̷̪̌𝔬̷̼͂𝔴̵̯̉ 𝔣̷̛͖𝔯̸̯̈𝔢̶̱͆𝔢̶̠̔"},"frame":{"prefix":"꧁𓆙𓇼꧂ ","suffix":" ꧁𓇼𓆙꧂"}};
+/** Diacritic Bloom v1.0.0. Visual Unicode codec, not encryption. No dependencies. */
+function deepFreeze(value) {
+  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+    Object.freeze(value); for (const child of Object.values(value)) deepFreeze(child);
+  }
+  return value;
+}
+deepFreeze(DATA);
+const VERSION = '1.0.0';
+const FONTS = DATA.fonts;
+const MARKS = DATA.pools;
+const ORIGINAL = DATA.original;
+const PROFILES = deepFreeze({
+  dust: {overlay: 0, above: 1, below: 1},
+  bloom: {overlay: 1, above: 2, below: 1},
+  feral: {overlay: 1, above: 4, below: 3},
+  overgrown: {overlay: 1, above: 6, below: 5}
+});
+const LIMITS = deepFreeze({source: 20000, encoded: 300000, marks: 12, packet: 2000000});
+const reverse = new Map();
+for (const font of Object.values(FONTS)) {
+  for (const [plain, styled] of Object.entries(font.map)) {
+    if (reverse.has(styled) && reverse.get(styled) !== plain) throw new Error('Conflicting mapping.');
+    reverse.set(styled, plain);
+  }
+}
+const ownedMarks = new Set(Object.keys(DATA.markInfo));
+const isMark = /\p{M}/u;
+const segmenter = typeof Intl !== 'undefined' && typeof Intl.Segmenter === 'function'
+  ? new Intl.Segmenter('en', {granularity: 'grapheme'}) : null;
+function textArg(value, name = 'text', max = LIMITS.encoded) {
+  if (typeof value !== 'string') throw new TypeError(`${name} must be a string.`);
+  if (value.length > max) throw new RangeError(`${name} exceeds ${max} UTF-16 code units.`);
+  for (const ch of value) {
+    const cp = ch.codePointAt(0);
+    if (cp >= 0xD800 && cp <= 0xDFFF) throw new TypeError(`${name} contains an unpaired surrogate.`);
+  }
+  return value;
+}
+function integer(value, name, min, max) {
+  if (!Number.isInteger(value) || value < min || value > max)
+    throw new RangeError(`${name} must be an integer from ${min} to ${max}.`);
+  return value;
+}
+function segments(text) {
+  if (!segmenter) throw new Error('This browser needs Intl.Segmenter support. Try a current browser.');
+  return Array.from(segmenter.segment(text), x => x.segment);
+}
+function optionsArg(input = {}) {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new TypeError('Options must be an object.');
+  const allowed = new Set(['font','mode','palette','seed','overlay','above','below','strict','frame']);
+  for (const key of Object.keys(input)) if (!allowed.has(key)) throw new TypeError(`Unknown option: ${key}`);
+  const o = {
+    font: 'fraktur', mode: 'single', palette: ['fraktur','bold-script','double-struck','monospace'],
+    seed: 12648430, overlay: 1, above: 2, below: 1, strict: false, frame: false, ...input
+  };
+  if (!Object.hasOwn(FONTS, o.font)) throw new RangeError(`Unknown font: ${o.font}`);
+  if (!['single','cycle-letter','cycle-word','random-letter'].includes(o.mode)) throw new RangeError('Unknown mixing mode.');
+  if (!Array.isArray(o.palette) || !o.palette.length || o.palette.length > 32 ||
+      o.palette.some(f => !Object.hasOwn(FONTS, f))) throw new RangeError('Palette must contain 1 to 32 known font IDs.');
+  o.palette = [...o.palette];
+  integer(o.seed, 'seed', 0, 0xFFFFFFFF);
+  integer(o.overlay, 'overlay', 0, 2); integer(o.above, 'above', 0, 6); integer(o.below, 'below', 0, 6);
+  if (o.overlay + o.above + o.below > LIMITS.marks) throw new RangeError('Use at most 12 added marks per styled character.');
+  if (typeof o.strict !== 'boolean' || typeof o.frame !== 'boolean') throw new TypeError('strict and frame must be booleans.');
+  return o;
+}
+/** Mulberry32. This is a reproducibility generator, not a cryptographic RNG. */
+function seeded(seed) {
+  let state = seed >>> 0;
+  return function next() {
+    state = (state + 0x6D2B79F5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+/** Sample without replacement. Order is deliberate and frozen by v1. */
+function pickMarks(pool, count, rng) {
+  const bag = [...pool]; let out = '';
+  for (let i = 0; i < count; i++) out += bag.splice(Math.floor(rng() * bag.length), 1)[0];
+  return out;
+}
+function frameText(text) { return DATA.frame.prefix + text + DATA.frame.suffix; }
+function unframeText(text) {
+  return text.startsWith(DATA.frame.prefix) && text.endsWith(DATA.frame.suffix)
+    ? text.slice(DATA.frame.prefix.length, -DATA.frame.suffix.length) : text;
+}
+/**
+ * Style ASCII letters/digits and append marks. Non-ASCII grapheme clusters pass through.
+ * strict=true accepts printable ASCII plus TAB/LF/CR only, giving exact text round trips.
+ */
+function encode(text, options = {}) {
+  textArg(text, 'source', LIMITS.source);
+  const o = optionsArg(options);
+  if (o.strict && /[^\x20-\x7E\t\n\r]/u.test(text))
+    throw new RangeError('Strict mode accepts printable ASCII plus tab and line breaks only.');
+  const rng = seeded(o.seed); let result = '', glyph = 0, word = -1, insideWord = false;
+  for (const cluster of segments(text)) {
+    const eligible = /^[A-Za-z0-9]$/.test(cluster);
+    if (!eligible) { result += cluster; insideWord = false; continue; }
+    if (!insideWord) { word++; insideWord = true; }
+    let family = o.font;
+    if (o.mode === 'cycle-letter') family = o.palette[glyph % o.palette.length];
+    if (o.mode === 'cycle-word') family = o.palette[word % o.palette.length];
+    if (o.mode === 'random-letter') family = o.palette[Math.floor(rng() * o.palette.length)];
+    glyph++;
+    const base = FONTS[family].map[cluster];
+    // Families without digits keep ASCII digits undecorated, not borrowed from a different face.
+    if (!base) { result += cluster; continue; }
+    result += base + pickMarks(MARKS.overlay, o.overlay, rng)
+      + pickMarks(MARKS.above, o.above, rng) + pickMarks(MARKS.below, o.below, rng);
+  }
+  return o.frame ? frameText(result) : result;
+}
+/**
+ * Recover readable text by reversing only our known alphabets and their adjacent mark allowlist.
+ * Does not globally normalize or delete combining marks from ordinary text/emoji.
+ * Original styling/accent intent on a known styled base cannot be inferred from naked text.
+ */
+function decode(text, {stripFrame = true, strictOutput = false} = {}) {
+  textArg(text);
+  if (typeof stripFrame !== 'boolean' || typeof strictOutput !== 'boolean') throw new TypeError('Decoder flags must be booleans.');
+  const chars = Array.from(stripFrame ? unframeText(text) : text); let out = '';
+  for (let i = 0; i < chars.length; i++) {
+    const plain = reverse.get(chars[i]);
+    if (plain === undefined) { out += chars[i]; continue; }
+    out += plain;
+    while (i + 1 < chars.length && isMark.test(chars[i + 1])) {
+      const mark = chars[++i]; if (!ownedMarks.has(mark)) out += mark;
+    }
+  }
+  if (strictOutput && /[^\x20-\x7E\t\n\r]/u.test(out))
+    throw new RangeError('Decoded text contains characters outside the strict ASCII domain.');
+  return out;
+}
+function specimen({frame = false} = {}) {
+  if (typeof frame !== 'boolean') throw new TypeError('frame must be a boolean.');
+  return frame ? frameText(ORIGINAL.encoded) : ORIGINAL.encoded;
+}
+/** An explicit sidecar keeps source, settings and the exact encoded sequence. Nothing is hidden. */
+function pack(source, options = {}) {
+  const settings = optionsArg(options);
+  const encoded = encode(source, settings);
+  return {format: 'diacritic-bloom', version: 1, kind: 'generated', source, settings, encoded};
+}
+function specimenPacket({frame = false} = {}) {
+  return {format: 'diacritic-bloom', version: 1, kind: 'specimen', source: ORIGINAL.plain,
+    settings: {frame}, encoded: specimen({frame})};
+}
+/** Validate before accepting a saved recipe. Returns a new object; never executes imported content. */
+function unpack(value) {
+  let p = value;
+  if (typeof p === 'string') { textArg(p, 'packet', LIMITS.packet); p = JSON.parse(p); }
+  if (!p || typeof p !== 'object' || Array.isArray(p) || p.format !== 'diacritic-bloom' || p.version !== 1)
+    throw new TypeError('Not a supported Diacritic Bloom v1 packet.');
+  textArg(p.source, 'source', LIMITS.source); textArg(p.encoded);
+  let rebuilt;
+  if (p.kind === 'generated') rebuilt = pack(p.source, p.settings);
+  else if (p.kind === 'specimen') {
+    if (!p.settings || typeof p.settings.frame !== 'boolean') throw new TypeError('Invalid specimen settings.');
+    rebuilt = specimenPacket(p.settings);
+  } else throw new TypeError('Unknown packet kind.');
+  if (rebuilt.source !== p.source || rebuilt.encoded !== p.encoded)
+    throw new Error('Recipe validation failed: source, settings and encoded text disagree.');
+  return rebuilt;
+}
+function codepoint(ch) { return 'U+' + ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0'); }
+function inspect(text, limit = 48) {
+  textArg(text); integer(limit, 'limit', 1, 256);
+  return segments(text).slice(0, limit).map((cluster, index) => ({
+    index, cluster, characters: Array.from(cluster, ch => ({
+      character: ch, codepoint: codepoint(ch),
+      name: DATA.markInfo[ch]?.name ?? DATA.baseNames[ch] ??
+        (ch === ' ' ? 'SPACE' : ch === '\n' ? 'LINE FEED' : ch === '\t' ? 'TAB' : 'CHARACTER'),
+      layer: MARKS.overlay.includes(ch) ? 'through' : MARKS.above.includes(ch) ? 'above / upper-right'
+        : MARKS.below.includes(ch) ? 'below' : DATA.markInfo[ch] ? 'specimen mark' : 'base / passthrough',
+      combiningClass: DATA.markInfo[ch]?.ccc ?? null
+    }))
+  }));
+}
+function stats(text) {
+  textArg(text);
+  return {graphemes: segments(text).length, codepoints: Array.from(text).length,
+    utf16: text.length, utf8: new TextEncoder().encode(text).length,
+    combiningMarks: Array.from(text).filter(ch => isMark.test(ch)).length};
+}
+const Bloom = Object.freeze({VERSION,FONTS,MARKS,ORIGINAL,PROFILES,LIMITS,
+  encode,decode,specimen,pack,unpack,specimenPacket,inspect,stats});
+
+'use strict';
+window.Bloom = Bloom;
+const $ = id => document.getElementById(id);
+let literal = true, currentPacket = null, currentWire = '', selectedGlyph = 0;
+let currentPalette = ['fraktur','bold-script','double-struck','monospace'];
+for (const [id, f] of Object.entries(Bloom.FONTS)) {
+  const option = document.createElement('option'); option.value = id;
+  option.textContent = f.label + ' · ' + Array.from('Abc').map(c => f.map[c]).join(''); $('font').append(option);
+}
+function settings() {
+  return {font: $('font').value, mode: $('mode').value, seed: Number($('seed').value),
+    above: Number($('above').value), overlay: Number($('overlay').value), below: Number($('below').value),
+    frame: $('frame').checked, strict: $('strict').checked, palette: currentPalette};
+}
+function setSettings(s) {
+  for (const id of ['font','mode','seed','above','overlay','below']) $(id).value = s[id];
+  $('frame').checked = s.frame; $('strict').checked = s.strict; currentPalette = [...s.palette];
+}
+function announce(text) { $('toast').textContent = text; }
+function drawGlyph(item) {
+  $('glyph-big').textContent = item?.cluster ?? '∅'; $('cp-list').replaceChildren();
+  if (!item) return;
+  for (const c of item.characters) {
+    const row = document.createElement('div'); row.className = 'cp';
+    const code = document.createElement('code'); code.textContent = c.codepoint;
+    const name = document.createElement('span'); name.textContent = c.name;
+    const sub = document.createElement('em'); sub.textContent = c.layer + (c.combiningClass === null ? '' : ' · ccc ' + c.combiningClass);
+    name.append(sub); row.append(code,name); $('cp-list').append(row);
+  }
+}
+function microscope() {
+  const items = Bloom.inspect(currentWire, 64).filter(x => !/^\s+$/u.test(x.cluster)).slice(0,24);
+  selectedGlyph = Math.min(selectedGlyph, Math.max(0,items.length - 1)); $('chips').replaceChildren();
+  for (let i=0; i<items.length; i++) {
+    const btn = document.createElement('button'); btn.textContent = items[i].cluster;
+    btn.setAttribute('aria-label', `Inspect cluster ${i+1}: ${items[i].characters.map(c => c.codepoint).join(' ')}`);
+    btn.setAttribute('aria-pressed', String(i === selectedGlyph));
+    btn.onclick = () => { selectedGlyph=i; for (const b of $('chips').children) b.setAttribute('aria-pressed','false'); btn.setAttribute('aria-pressed','true'); drawGlyph(items[i]); };
+    $('chips').append(btn);
+  }
+  drawGlyph(items[selectedGlyph]);
+}
+function paintReadingView() {
+  $('bloom').textContent = $('plain-view').checked ? Bloom.decode(currentWire) : currentWire;
+  $('bloom').classList.toggle('plain', $('plain-view').checked);
+}
+function render() {
+  $('error').textContent = '';
+  $('palette-hint').textContent = 'Mixed palette: ' + currentPalette.map(id => Bloom.FONTS[id].label).join(' → ') + '.';
+  for (const id of ['above','overlay','below']) $(id+'-value').textContent = $(id).value;
+  try {
+    const p = literal ? Bloom.specimenPacket({frame:$('frame').checked}) : Bloom.pack($('source').value, settings());
+    currentPacket = p; currentWire = p.encoded; $('wire').value = currentWire; paintReadingView();
+    $('accessible-output').textContent = Bloom.decode(currentWire);
+    $('render-mode').textContent = literal ? 'LITERAL SPECIMEN' : 'SEEDED BLOOM';
+    const n = Bloom.stats(currentWire); $('stats').replaceChildren();
+    for (const label of [`${n.graphemes} clusters`,`${n.codepoints} code points`,`${n.utf8} UTF-8 bytes`,`${n.combiningMarks} marks`]) {
+      const span = document.createElement('span'); span.textContent = label; $('stats').append(span);
+    }
+    const exact = Bloom.decode(currentWire) === p.source;
+    $('roundtrip').textContent = exact ? '✓ Plain-text recovery matches this source exactly.' : '△ Plain decoding changes original styling. Save the JSON recipe to preserve the exact source.';
+    $('roundtrip').classList.toggle('warn',!exact); microscope();
+    for (const id of ['copy','save-text','save-recipe','use-current']) $(id).disabled = false;
+  } catch(e) {
+    $('error').textContent = e.message;
+    // Do not leave a stale bloom that appears to correspond to invalid settings.
+    currentPacket=null; currentWire=''; $('bloom').textContent=''; $('wire').value=''; $('accessible-output').textContent=''; $('stats').replaceChildren(); $('roundtrip').textContent=''; microscope();
+    for (const id of ['copy','save-text','save-recipe','use-current']) $(id).disabled = true;
+  }
+}
+function decodePanel() {
+  try { $('decoded').textContent=Bloom.decode($('decode-input').value); $('decode-error').textContent=''; }
+  catch(e) { $('decoded').textContent=''; $('decode-error').textContent=e.message; }
+}
+async function copyText(text, field = null) {
+  try { if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable'); await navigator.clipboard.writeText(text); return true; }
+  catch {
+    const temp=document.createElement('textarea'); temp.value=text; temp.style.position='fixed'; temp.style.top='0'; temp.style.left='-9999px'; document.body.append(temp); temp.focus(); temp.select();
+    let copied=false; try { copied=document.execCommand('copy'); } catch {} temp.remove();
+    if (copied) return true;
+    if (field) { $('wire-details').open=true; field.focus(); field.select(); }
+    return false;
+  }
+}
+function downloadText(text, filename, type) {
+  const url=URL.createObjectURL(new Blob([text],{type})); const a=document.createElement('a'); a.href=url; a.download=filename; document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function freshSeed() {
+  const v=new Uint32Array(1);
+  if (globalThis.crypto?.getRandomValues) crypto.getRandomValues(v); else v[0]=Math.floor(Math.random()*4294967296);
+  return v[0];
+}
+for (const id of ['source','font','mode','seed','above','overlay','below','strict']) {
+  $(id).addEventListener(id==='font'||id==='mode'||id==='strict'?'change':'input', ()=>{
+    literal=false;
+    if (['above','overlay','below'].includes(id)) {
+      const total=Number($('above').value)+Number($('overlay').value)+Number($('below').value);
+      if (total>12) { $(id).value=Number($(id).value)-(total-12); announce('Stack capped at 12 added marks per styled character.'); }
+    }
+    render();
+  });
+}
+$('frame').addEventListener('change',render);
+$('plain-view').addEventListener('change',paintReadingView);
+$('mutate').onclick=()=>{ literal=false; $('seed').value=freshSeed(); render(); announce('New seed. Same words, different growth.'); };
+for (const button of document.querySelectorAll('[data-profile]')) button.onclick=()=>{
+  const p=Bloom.PROFILES[button.dataset.profile]; for (const id of ['above','overlay','below']) $(id).value=p[id]; literal=false; render();
+};
+$('original').onclick=()=>{
+  $('source').value=Bloom.ORIGINAL.plain; literal=true; selectedGlyph=0;
+  setSettings({font:'fraktur',mode:'single',seed:12648430,above:2,overlay:1,below:1,frame:false,strict:false,palette:['fraktur','bold-script','double-struck','monospace']});
+  render(); announce('Your exact original is restored. Sliders apply when you generate a new bloom.');
+};
+$('example').onclick=()=>{ $('source').value='the kettle has entered its\nornamental awakening phase'; $('font').value='bold-script'; literal=false; render(); };
+$('copy').onclick=async()=>{ const ok=await copyText(currentWire,$('wire')); announce(ok?'Bloom copied.':'Encoded text selected below. Use your copy command.'); };
+$('save-text').onclick=()=>{downloadText(currentWire,'bloom.txt','text/plain;charset=utf-8');announce('Encoded text exported.');};
+$('save-recipe').onclick=()=>{if(currentPacket){downloadText(JSON.stringify(currentPacket,null,2)+'\n','bloom-recipe.json','application/json;charset=utf-8');announce('Recipe exported with exact source, settings and encoded text.');}};
+$('load-recipe').onclick=()=>$('recipe-file').click();
+$('recipe-file').onchange=async()=>{
+  try {
+    const file=$('recipe-file').files[0]; if(!file)return;
+    if(file.size>Bloom.LIMITS.packet)throw new Error('Recipe file is too large.');
+    const p=Bloom.unpack(await file.text()); $('source').value=p.source;
+    literal=p.kind==='specimen';
+    if(literal){$('frame').checked=p.settings.frame;}else setSettings(p.settings);
+    selectedGlyph=0; render(); announce('Recipe restored and verified.');
+  }catch(e){announce('Recipe not loaded: '+e.message);}finally{$('recipe-file').value='';}
+};
+$('decode-input').addEventListener('input',decodePanel);
+$('use-current').onclick=()=>{$('decode-input').value=currentWire;decodePanel();};
+$('copy-plain').onclick=async()=>{const ok=await copyText($('decoded').textContent);announce(ok?'Decoded words copied.':'Copy unavailable. Select and copy the decoded text.');};
+$('source').value=Bloom.ORIGINAL.plain; render();
+
+</script>
+</body>
+</html>

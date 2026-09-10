@@ -1,0 +1,104 @@
+[
+  {
+    "format": "diacritic-bloom",
+    "version": 1,
+    "kind": "generated",
+    "source": "the diacritics are now free",
+    "settings": {
+      "font": "fraktur",
+      "mode": "single",
+      "palette": [
+        "fraktur",
+        "bold-script",
+        "double-struck",
+        "monospace"
+      ],
+      "seed": 42,
+      "overlay": 1,
+      "above": 2,
+      "below": 1,
+      "strict": true,
+      "frame": false
+    },
+    "encoded": "𝔱̷̹̑͑𝔥̴̲̔̉𝔢̸͓̓̈ 𝔡̷̭̊̇𝔦̷̬̾̀𝔞̸̗́̾𝔠̵͈́̇𝔯̶͎̀̇𝔦̶̫͌̊𝔱̴̱́̽𝔦̵̥̿̇𝔠̷̠͑̓𝔰̵̹̊̂ 𝔞̷̙͆͗𝔯̸̝̐͘𝔢̴̬̀̏ 𝔫̷̻͒̂𝔬̸̟̉͆𝔴̶͚͐̃ 𝔣̶̰͗̐𝔯̵̼̾̋𝔢̵̺̑͑𝔢̸̯͒̐"
+  },
+  {
+    "format": "diacritic-bloom",
+    "version": 1,
+    "kind": "generated",
+    "source": "kettle resurrection",
+    "settings": {
+      "font": "bold-script",
+      "mode": "single",
+      "palette": [
+        "fraktur",
+        "bold-script",
+        "double-struck",
+        "monospace"
+      ],
+      "seed": 42,
+      "overlay": 1,
+      "above": 2,
+      "below": 1,
+      "strict": true,
+      "frame": false
+    },
+    "encoded": "𝓴̷̹̑͑𝓮̴̲̔̉𝓽̸͓̓̈𝓽̷̭̊̇𝓵̷̬̾̀𝓮̸̗́̾ 𝓻̵͈́̇𝓮̶͎̀̇𝓼̶̫͌̊𝓾̴̱́̽𝓻̵̥̿̇𝓻̷̠͑̓𝓮̵̹̊̂𝓬̷̙͆͗𝓽̸̝̐͘𝓲̴̬̀̏𝓸̷̻͒̂𝓷̸̟̉͆"
+  },
+  {
+    "format": "diacritic-bloom",
+    "version": 1,
+    "kind": "generated",
+    "source": "CHIRZ BEFHILMRego 0123456789",
+    "settings": {
+      "font": "script",
+      "mode": "single",
+      "palette": [
+        "fraktur",
+        "bold-script",
+        "double-struck",
+        "monospace"
+      ],
+      "seed": 0,
+      "overlay": 1,
+      "above": 2,
+      "below": 1,
+      "strict": true,
+      "frame": false
+    },
+    "encoded": "𝒞̵̞̀̈ℋ̶̛̳̿ℐ̶̜̽̈ℛ̸̹̐͊𝒵̸̛̝̿ ℬ̵̙͐̋ℰ̷̛̬͗ℱ̵̮̃͋ℋ̵̢̄̌ℐ̵̦̉̆ℒ̸̼̐̓ℳ̷̯̔͘ℛ̵̳̏̇ℯ̴̬̏͘ℊ̶̟̂̀ℴ̴̡͋̋ 0123456789"
+  },
+  {
+    "format": "diacritic-bloom",
+    "version": 1,
+    "kind": "generated",
+    "source": "mixed family words 0123",
+    "settings": {
+      "font": "fraktur",
+      "mode": "random-letter",
+      "palette": [
+        "fraktur",
+        "bold-script",
+        "double-struck",
+        "monospace"
+      ],
+      "seed": 4294967295,
+      "overlay": 1,
+      "above": 4,
+      "below": 3,
+      "strict": true,
+      "frame": false
+    },
+    "encoded": "𝚖̴̺̫̝͆͐̓͘𝚒̸͇͕̜̇̌͋̓𝔵̵̜̙̯͗͒͊͌𝓮̵̛̪̠̩̀̓̉𝕕̷̗̤̦̄̊͒͌ 𝕗̷͚̲̩͋̆͑͘𝓪̶͔̞͓͒̈̽̏𝔪̴̢̛̫͉͂̽͋𝓲̶͇͔͓͛̋̐̓𝓵̷͖̣̞̑̓̇̈𝚢̵̦̲̯̂̾̆̄ 𝚠̸̨̩͍̇̉̊͛𝕠̷̧̖͍͋̓̽͊𝔯̷̙̰̩̇̏̔̂𝕕̵͍͓̟̂̏͊̄𝕤̶̛͎̖̺̀̊͒ 012𝟹̸͖̰̗̌̈͊̃"
+  },
+  {
+    "format": "diacritic-bloom",
+    "version": 1,
+    "kind": "specimen",
+    "source": "the diacritics are now free",
+    "settings": {
+      "frame": true
+    },
+    "encoded": "꧁𓆙𓇼꧂ 𝔱̷̛̝̈́𝔥̶͖̈́𝔢̵̪͆ 𝔡̴̹̄𝔦̸̙̀𝔞̶̽͜𝔠̷̤͋𝔯̶̱͊𝔦̵̲̑𝔱̴̱͝𝔦̴̬͘𝔠̶͇̀𝔰̵̮͝ 𝔞̵̢͛𝔯̴͍͝𝔢̴͉̀ 𝔫̷̪̌𝔬̷̼͂𝔴̵̯̉ 𝔣̷̛͖𝔯̸̯̈𝔢̶̱͆𝔢̶̠̔ ꧁𓇼𓆙꧂"
+  }
+]
