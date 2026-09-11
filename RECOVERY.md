@@ -4,7 +4,7 @@ The complete recovered Diacritic Bloom 1.0.0 source bundle is preserved here. It
 
 The publishing kit supplied this bundle under `sources/diacritic-bloom`; the original source/protocol/data checksums are retained in `SHA256SUMS.json`. The workspace archive also preserves the source kit. `index.html` is a new launch entry; no existing protocol or artwork was changed to make the new entry.
 
-Attribution: Lily of Ashwood and the collaborative recovered source material. No explicit license file was supplied in this bundle. This is a private review candidate; confirm a license before public release. Previous `TESTING.md` reports describe the earlier session and are not fresh results from this recovery.
+Attribution: Lily of Ashwood and the collaborative recovered source material. No license has been selected; source publication does not grant a reuse license. Previous `TESTING.md` reports describe the earlier session and are not fresh results from this recovery.
 
 The new Zalgo MUX 3.0.0 work uses the same separation between glyph bodies and mark layers, but has its own independent payload framing. It does not rename this visual codec or invent a hidden payload in the original specimen.
 
