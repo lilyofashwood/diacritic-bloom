@@ -129,4 +129,16 @@ $('recipe-file').onchange=async()=>{
 $('decode-input').addEventListener('input',decodePanel);
 $('use-current').onclick=()=>{$('decode-input').value=currentWire;decodePanel();};
 $('copy-plain').onclick=async()=>{const ok=await copyText($('decoded').textContent);announce(ok?'Decoded words copied.':'Copy unavailable. Select and copy the decoded text.');};
-$('source').value=Bloom.ORIGINAL.plain; render();
+$('source').value=Bloom.ORIGINAL.plain;
+// Public launch routes select only existing UI presets, never source text or recipes.
+const route=new URLSearchParams(location.search);
+for(const id of ['font','mode']){
+  const value=route.get(id);
+  if(value&&Array.from($(id).options).some(option=>option.value===value)){$(id).value=value;literal=false;}
+}
+const profile=route.get('profile');
+if(Object.hasOwn(Bloom.PROFILES,profile)){
+  for(const id of ['above','overlay','below'])$(id).value=Bloom.PROFILES[profile][id];
+  literal=false;
+}
+render();

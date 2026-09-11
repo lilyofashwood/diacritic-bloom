@@ -12,6 +12,7 @@ a{color:var(--mint);text-underline-offset:4px}button,input,select,textarea{font:
 @media(max-width:780px){main{padding:21px 15px 45px}.mast{align-items:flex-start}.eyebrow{font-size:10px}.pill{font-size:10px;white-space:nowrap}.hero{padding-top:14px}.hero h1{font-size:36px}.hero p{font-size:14px;padding-right:0}.hero .cat{display:none}.grid{grid-template-columns:1fr;grid-template-areas:'source' 'controls' 'preview' 'decoder' 'microscope' 'spec'}.panel{padding:18px}.bloom-display{font-size:27px}.spec-grid{grid-template-columns:1fr}.footer{display:block}.footer span{display:block;margin-bottom:6px}.two{grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<link rel="stylesheet" href="presentation.css">
 </head>
 <body>
 <noscript><div class="noscript">This workshop needs JavaScript. The companion Markdown specification and original specimen remain readable without it.</div></noscript>
@@ -411,8 +412,21 @@ $('recipe-file').onchange=async()=>{
 $('decode-input').addEventListener('input',decodePanel);
 $('use-current').onclick=()=>{$('decode-input').value=currentWire;decodePanel();};
 $('copy-plain').onclick=async()=>{const ok=await copyText($('decoded').textContent);announce(ok?'Decoded words copied.':'Copy unavailable. Select and copy the decoded text.');};
-$('source').value=Bloom.ORIGINAL.plain; render();
+$('source').value=Bloom.ORIGINAL.plain;
+// Public launch routes select only existing UI presets, never source text or recipes.
+const route=new URLSearchParams(location.search);
+for(const id of ['font','mode']){
+  const value=route.get(id);
+  if(value&&Array.from($(id).options).some(option=>option.value===value)){$(id).value=value;literal=false;}
+}
+const profile=route.get('profile');
+if(Object.hasOwn(Bloom.PROFILES,profile)){
+  for(const id of ['above','overlay','below'])$(id).value=Bloom.PROFILES[profile][id];
+  literal=false;
+}
+render();
 
 </script>
+<script src="presentation.js" data-raw="#bloom;#decoded;#accessible-output;#chips;#glyph-big;#cp-list" data-specimen-options="#font option"></script>
 </body>
 </html>

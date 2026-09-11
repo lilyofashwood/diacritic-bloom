@@ -3,3 +3,23 @@
 .garden-presentation p,.garden-presentation li,.garden-presentation label,.garden-presentation button,.garden-presentation a{overflow-wrap:anywhere}
 .garden-presentation button,.garden-presentation select{line-height:1.5}
 .garden-literal-note{font-size:12px;line-height:1.8;opacity:.8}
+/* The mark observatory keeps its own copper-and-cherry weather. */
+body.garden-presentation{--math:'STIXGeneral','STIX Two Math','Cambria Math','Noto Sans Math','DejaVu Sans',serif}
+body.garden-presentation{--bg:#0b0b10;--panel:#18141c;--panel2:#211820;--edge:#866b554f;--ink:#f2e8dc;--muted:#c4b5b4;--pink:#e3a1b5;--lilac:#e2bf87;--mint:#bfd5c4;background:radial-gradient(ellipse at 10% 0%,#602c3338,transparent 45%),radial-gradient(ellipse at 95% 38%,#294c4430,transparent 40%),#0b0b10;color:var(--ink)}
+.garden-presentation .hero{border-bottom:1px solid #ba93635c;margin-bottom:28px}
+.garden-presentation .hero::before{content:'✧';position:absolute;right:28%;top:13px;font-size:25px;color:#c2986277}
+.garden-presentation .hero h1{color:#f0d5b0;text-shadow:0 0 30px #c67c8730}
+.garden-presentation .panel{background:linear-gradient(140deg,#211922dd,#111318f2);border:1px solid #b7976650;border-radius:3px 22px 3px 22px;box-shadow:inset 0 1px #efb8a00b}
+.garden-presentation .panel-index{color:#e5b687;border:1px solid #b68d634d;border-radius:50%;display:inline-grid;place-items:center;width:25px;height:25px;font-size:11px}
+.garden-presentation h2,.garden-presentation h3,.garden-presentation summary{color:#e5c695}
+.garden-presentation .tag,.garden-presentation .pill{border-color:#b08c625c;color:#d4b899;border-radius:3px 12px}
+.garden-presentation button{border-radius:4px 10px;background:#2b2028;border-color:#aa825c80;color:#ead6bd}
+.garden-presentation button.primary{background:#ddbc88;border-color:#e9cfa5;color:#211922}
+.garden-presentation button:hover{background:#48303c}
+.garden-presentation button.primary:hover{background:#f0d2a3}
+.garden-presentation input,.garden-presentation textarea,.garden-presentation select{background:#0c1016;border-color:#89735980;border-radius:4px 10px}
+.garden-presentation .formula{background:#0c1016;border-left:2px solid #bd916b}
+.garden-presentation :is(button,a,input,textarea,select,summary):focus-visible{outline:2px solid #eed09c;outline-offset:4px}
+.garden-presentation .garden-literal-note{border-bottom:1px solid #b18c5e40}
+@media(max-width:780px){.garden-presentation .hero::before{right:8%;top:0}.garden-presentation .panel{border-radius:3px 16px 3px 16px}.garden-presentation .mast{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.garden-presentation *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}

@@ -24,9 +24,8 @@
   }
   function install(doc, options = {}) {
     if (!doc.body || doc.body.dataset.gardenReady) return;
-    for (const selector of options.raw || []) {
-      for (const element of doc.querySelectorAll(selector)) element.setAttribute('data-literal', '');
-    }
+    // Selectors stay active when applications replace literal output nodes.
+    const skip = [SKIP, ...(options.raw || [])].join(',');
     doc.body.dataset.gardenReady = 'true';
     doc.body.classList.add('garden-presentation');
     const ownedLabels = new WeakSet();
@@ -39,8 +38,20 @@
     }
     function paint() {
       observer.disconnect();
+      if (ASCII.test(doc.title)) doc.title = letters(doc.title);
+      // Attributes are visible UI too; never change an editable value.
+      for (const element of doc.querySelectorAll('[placeholder],[title]')) {
+        if (element.closest('[data-literal]')) continue;
+        for (const name of ['placeholder', 'title']) {
+          const plain = element.getAttribute(name);
+          if (!plain || !ASCII.test(plain) || element.hasAttribute('data-literal-' + name)) continue;
+          if (name === 'placeholder' && !element.hasAttribute('aria-placeholder')) element.setAttribute('aria-placeholder', plain);
+          if (name === 'title' && !element.hasAttribute('aria-description')) element.setAttribute('aria-description', plain);
+          element.setAttribute(name, letters(plain));
+        }
+      }
       for (const element of doc.querySelectorAll('button,a,label,summary,option,h1,h2,h3,h4,h5,h6')) {
-        if (element.closest(SKIP) || !ASCII.test(element.textContent)) continue;
+        if (element.closest(skip) || !ASCII.test(element.textContent)) continue;
         const plain = element.textContent.normalize('NFKC');
         accessible(element, plain);
         if (element.tagName === 'LABEL' && element.htmlFor) {
@@ -49,19 +60,25 @@
         }
         // Option labels may change; their underlying values must not.
         if (element.tagName === 'OPTION' && !element.hasAttribute('value')) element.value = element.value;
+        if (element.tagName === 'OPTION' && element.hasAttribute('label')) element.label = letters(element.label);
       }
       const walker = doc.createTreeWalker(doc.body, 4);
       const nodes = [];
       while (walker.nextNode()) nodes.push(walker.currentNode);
       for (const node of nodes) {
         const parent = node.parentElement;
-        if (!parent || parent.closest(SKIP) || !ASCII.test(node.data)) continue;
+        if (!parent || parent.closest(skip) || !ASCII.test(node.data)) continue;
         const heading = parent.closest('h1,h2,h3');
         const voice = heading ? (heading.tagName === 'H1' ? options.titleVoice || 'bold-script' : 'monospace') : 'house';
-        const decorated = prose(node.data, voice);
+        // A font menu contains an exact sample after its final separator.
+        const specimen = options.specimenOptions && parent.closest(options.specimenOptions);
+        const split = specimen ? node.data.lastIndexOf(' · ') : -1;
+        const decorated = split >= 0 ? letters(node.data.slice(0, split), voice) + node.data.slice(split)
+          : heading ? letters(node.data, voice) : prose(node.data, voice);
         if (node.data !== decorated) node.data = decorated;
       }
-      observer.observe(doc.body, { childList: true, subtree: true, characterData: true });
+      observer.observe(doc.documentElement, { childList: true, subtree: true, characterData: true,
+        attributes: true, attributeFilter: ['placeholder', 'title', 'label'] });
     }
     const observer = new doc.defaultView.MutationObserver(paint);
     paint();
@@ -73,13 +90,15 @@
   if (typeof document !== 'undefined') {
     const script = document.currentScript;
     const options = { titleVoice: script?.dataset.titleVoice || 'bold-script',
-      raw: (script?.dataset.raw || '').split(';').filter(Boolean) };
+      raw: (script?.dataset.raw || '').split(';').filter(Boolean),
+      specimenOptions: script?.dataset.specimenOptions || '' };
     install(document, options);
     for (const frame of document.querySelectorAll('iframe[data-garden-frame]')) {
       const decorate = () => {
         try {
           const doc = frame.contentDocument;
-          install(doc, { raw: ['#bloom', '#decoded', '#accessible-output', '#chips', '#glyph-big', '#cp-list', '.formula'] });
+          install(doc, { raw: ['#bloom', '#decoded', '#accessible-output', '#chips', '#glyph-big', '#cp-list'],
+            specimenOptions: '#font option' });
           const link = doc.createElement('link');
           link.rel = 'stylesheet'; link.href = 'presentation.css'; doc.head.append(link);
           const size = () => { frame.style.height = Math.ceil(doc.body.scrollHeight) + 'px'; };
