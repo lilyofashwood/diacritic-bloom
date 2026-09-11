@@ -1,31 +1,28 @@
-# Diacritic Bloom
+# ꧁𓆙𓇼꧂ 𝖽𝐢𝐚𝖼𝗋𝐢𝗍𝐢𝖼 𝖻𝗅𝐨𝐨𝗆 ꧁𓇼𓆙꧂
 
-A local Unicode workshop for styling letter-bodies, stacking combining marks, and recovering the words underneath.
+*𝗍𝗁𝐞 𝗅𝐞𝗍𝗍𝐞𝗋 𝗁𝐚𝗌 𝐚 𝖻𝐨𝖽𝗒. 𝗍𝗁𝐞 𝗐𝐞𝐚𝗍𝗁𝐞𝗋 𝐢𝗌 𝗒𝐨𝐮𝗋𝗌.*
 
-## Start here
+[𝖿𝗋𝐞𝐞 𝗍𝗁𝐞 𝖽𝐢𝐚𝖼𝗋𝐢𝗍𝐢𝖼𝗌](https://lilyofashwood.github.io/diacritic-bloom/)
 
-Open **diacritic-bloom.html** in a browser that permits local HTML JavaScript. It is self-contained: no installation, network requests or neighboring files are required by the app. The default output is the exact original “the diacritics are now free” specimen.
+𝖼𝗁𝐨𝐨𝗌𝐞 𝐚𝗆𝐨𝗇𝗀 14 𝐮𝗇𝐢𝖼𝐨𝖽𝐞 𝗅𝐞𝗍𝗍𝐞𝗋 𝖿𝐚𝗆𝐢𝗅𝐢𝐞𝗌, 𝗆𝐢𝗑 𝗍𝗁𝐞𝐢𝗋 𝗏𝐨𝐢𝖼𝐞𝗌, 𝐚𝗇𝖽 𝗀𝗋𝐨𝗐 𝖼𝐨𝗆𝖻𝐢𝗇𝐢𝗇𝗀 𝗆𝐚𝗋𝗄𝗌 𝐚𝖻𝐨𝗏𝐞, 𝗍𝗁𝗋𝐨𝐮𝗀𝗁 𝐚𝗇𝖽 𝖻𝐞𝗅𝐨𝗐 𝗍𝗁𝐞𝗆. 𝖻𝗅𝐨𝐨𝗆 𝗋𝐞𝖼𝐨𝗏𝐞𝗋𝗌 𝗍𝗁𝐞 𝗐𝐨𝗋𝖽𝗌 𝐮𝗇𝖽𝐞𝗋𝗇𝐞𝐚𝗍𝗁 𝐚𝗇𝖽 𝗌𝐚𝗏𝐞𝗌 𝐞𝗑𝐚𝖼𝗍 𝗋𝐞𝖼𝐢𝗉𝐞𝗌 𝗌𝐨 𝗍𝗁𝐞 𝗌𝐚𝗆𝐞 𝗐𝐞𝐚𝗍𝗁𝐞𝗋 𝖼𝐚𝗇 𝗋𝐞𝗍𝐮𝗋𝗇.
 
-Use **Your exact original** to restore that sequence. Edit text or controls to make a seeded variation. **Copy bloom** copies the actual Unicode text, not an image. **Use current bloom** sends it to the decoder. **Save recipe .json** saves source, settings and exact decoration; **Open recipe** validates and restores them.
+## 𝗌𝗍𝐚𝗋𝗍 𝗁𝐞𝗋𝐞
 
-The full specification is in **SPEC.md**. The complete alphabet and mark tables are in **tables.json**. No font files are included or required.
+𝐨𝗉𝐞𝗇 [𝗍𝗁𝐞 𝗌𝗍𝐚𝗇𝖽𝐚𝗅𝐨𝗇𝐞 𝗐𝐨𝗋𝗄𝗌𝗁𝐨𝗉](diacritic-bloom.html) 𝐢𝗇 𝐚 𝖻𝗋𝐨𝗐𝗌𝐞𝗋. 𝐞𝗏𝐞𝗋𝗒𝗍𝗁𝐢𝗇𝗀 𝗋𝐮𝗇𝗌 𝗅𝐨𝖼𝐚𝗅𝗅𝗒: 𝗇𝐨 𝐢𝗇𝗌𝗍𝐚𝗅𝗅𝐚𝗍𝐢𝐨𝗇, 𝗇𝐞𝗍𝗐𝐨𝗋𝗄 𝗋𝐞𝗊𝐮𝐞𝗌𝗍𝗌 𝐨𝗋 𝗇𝐞𝐢𝗀𝗁𝖻𝐨𝗋𝐢𝗇𝗀 𝖿𝐢𝗅𝐞𝗌 𝐚𝗋𝐞 𝗋𝐞𝗊𝐮𝐢𝗋𝐞𝖽 𝖻𝗒 𝗍𝗁𝐞 𝐚𝗉𝗉. 𝗍𝗁𝐞 𝐨𝗉𝐞𝗇𝐢𝗇𝗀 𝖻𝗅𝐨𝐨𝗆 𝐢𝗌 𝗅𝐢𝗅𝗒'𝗌 𝐞𝗑𝐚𝖼𝗍 𝐨𝗋𝐢𝗀𝐢𝗇𝐚𝗅 “𝗍𝗁𝐞 𝖽𝐢𝐚𝖼𝗋𝐢𝗍𝐢𝖼𝗌 𝐚𝗋𝐞 𝗇𝐨𝗐 𝖿𝗋𝐞𝐞” 𝗌𝗉𝐞𝖼𝐢𝗆𝐞𝗇.
 
-## Included files
+**𝗒𝐨𝐮𝗋 𝐞𝗑𝐚𝖼𝗍 𝐨𝗋𝐢𝗀𝐢𝗇𝐚𝗅** 𝗋𝐞𝗌𝗍𝐨𝗋𝐞𝗌 𝗍𝗁𝐚𝗍 𝗌𝐞𝗊𝐮𝐞𝗇𝖼𝐞. 𝐞𝖽𝐢𝗍 𝗍𝐞𝗑𝗍 𝐨𝗋 𝖼𝐨𝗇𝗍𝗋𝐨𝗅𝗌 𝗍𝐨 𝗆𝐚𝗄𝐞 𝐚 𝗌𝐞𝐞𝖽𝐞𝖽 𝗏𝐚𝗋𝐢𝐚𝗍𝐢𝐨𝗇. **𝖼𝐨𝗉𝗒 𝖻𝗅𝐨𝐨𝗆** 𝖼𝐨𝗉𝐢𝐞𝗌 𝗋𝐞𝐚𝗅 𝐮𝗇𝐢𝖼𝐨𝖽𝐞 𝗍𝐞𝗑𝗍. **𝐮𝗌𝐞 𝖼𝐮𝗋𝗋𝐞𝗇𝗍 𝖻𝗅𝐨𝐨𝗆** 𝗌𝐞𝗇𝖽𝗌 𝐢𝗍 𝗍𝐨 𝗍𝗁𝐞 𝖽𝐞𝖼𝐨𝖽𝐞𝗋. **𝗌𝐚𝗏𝐞 𝗋𝐞𝖼𝐢𝗉𝐞 .𝗃𝗌𝐨𝗇** 𝗄𝐞𝐞𝗉𝗌 𝗌𝐨𝐮𝗋𝖼𝐞, 𝗌𝐞𝗍𝗍𝐢𝗇𝗀𝗌 𝐚𝗇𝖽 𝐞𝗑𝐚𝖼𝗍 𝖽𝐞𝖼𝐨𝗋𝐚𝗍𝐢𝐨𝗇 𝗍𝐨𝗀𝐞𝗍𝗁𝐞𝗋; **𝐨𝗉𝐞𝗇 𝗋𝐞𝖼𝐢𝗉𝐞** 𝗋𝐞𝗌𝗍𝐨𝗋𝐞𝗌 𝗍𝗁𝐞𝗆.
 
-- `diacritic-bloom.html`: standalone browser encoder, decoder and code-point inspector.
-- `SPEC.md`: rendering recipe, exact original, decoder limits, seeded algorithm and packet format.
-- `bloom.mjs`: dependency-free JavaScript ES module.
-- `cli.mjs`: Node command-line encoder and decoder.
-- `tables.json`: 14 letter-family maps and ordered combining-mark pools.
-- `original-specimen.txt`: exact unframed original, with no appended newline.
-- `original-recipe.json`: source plus exact original in the validated recipe format.
-- `specimen-clusters.json`: the original split into base-plus-mark units.
-- `test-vectors.json`: fixed regression vectors.
-- `bloom.test.mjs`: 27 source-module tests, including exhaustive profile/family combinations and randomized round trips.
-- `TESTING.md`: actual checks, runtime versions and limitations.
-- `src/` and `build.mjs`: maintainable browser/core source and rebuild script.
+## 𝐢𝗇𝗌𝐢𝖽𝐞 𝗍𝗁𝐞 𝗐𝐨𝗋𝗄𝗌𝗁𝐨𝗉
 
-## Module example
+- [𝗍𝗁𝐞 𝗌𝗉𝐞𝖼𝐢𝖿𝐢𝖼𝐚𝗍𝐢𝐨𝗇](SPEC.md): 𝗅𝐞𝗍𝗍𝐞𝗋 𝖻𝐨𝖽𝐢𝐞𝗌, 𝗆𝐚𝗋𝗄 𝗅𝐚𝗒𝐞𝗋𝗌, 𝖽𝐞𝗍𝐞𝗋𝗆𝐢𝗇𝐢𝗌𝗍𝐢𝖼 𝗀𝐞𝗇𝐞𝗋𝐚𝗍𝐢𝐨𝗇 𝐚𝗇𝖽 𝐞𝗑𝐚𝖼𝗍 𝗋𝐞𝖼𝐢𝗉𝐞𝗌.
+- `tables.json`: 14 𝗅𝐞𝗍𝗍𝐞𝗋-𝖿𝐚𝗆𝐢𝗅𝗒 𝗆𝐚𝗉𝗌 𝐚𝗇𝖽 𝐨𝗋𝖽𝐞𝗋𝐞𝖽 𝖼𝐨𝗆𝖻𝐢𝗇𝐢𝗇𝗀-𝗆𝐚𝗋𝗄 𝗉𝐨𝐨𝗅𝗌.
+- `bloom.mjs`: 𝖽𝐞𝗉𝐞𝗇𝖽𝐞𝗇𝖼𝗒-𝖿𝗋𝐞𝐞 𝗃𝐚𝗏𝐚𝗌𝖼𝗋𝐢𝗉𝗍 𝗆𝐨𝖽𝐮𝗅𝐞; `cli.mjs`: 𝖼𝐨𝗆𝗆𝐚𝗇𝖽-𝗅𝐢𝗇𝐞 𝐞𝗇𝖼𝐨𝖽𝐞𝗋 𝐚𝗇𝖽 𝖽𝐞𝖼𝐨𝖽𝐞𝗋.
+- `original-specimen.txt` 𝐚𝗇𝖽 `original-recipe.json`: 𝗍𝗁𝐞 𝐞𝗑𝐚𝖼𝗍 𝐨𝗋𝐢𝗀𝐢𝗇𝐚𝗅, 𝐢𝗇 𝗋𝐚𝗐 𝗍𝐞𝗑𝗍 𝐚𝗇𝖽 𝗋𝐞𝖼𝐢𝗉𝐞 𝖿𝐨𝗋𝗆.
+- `specimen-clusters.json`: 𝐢𝗍𝗌 𝖻𝐚𝗌𝐞-𝗉𝗅𝐮𝗌-𝗆𝐚𝗋𝗄 𝐚𝗇𝐚𝗍𝐨𝗆𝗒; `test-vectors.json`: 𝖿𝐢𝗑𝐞𝖽 𝗋𝐞𝗀𝗋𝐞𝗌𝗌𝐢𝐨𝗇 𝗏𝐞𝖼𝗍𝐨𝗋𝗌.
+- `bloom.test.mjs` 𝐚𝗇𝖽 [𝗍𝗁𝐞 𝗍𝐞𝗌𝗍𝐢𝗇𝗀 𝗋𝐞𝖼𝐨𝗋𝖽](TESTING.md): 𝗋𝐨𝐮𝗇𝖽 𝗍𝗋𝐢𝗉𝗌, 𝗌𝐨𝐮𝗋𝖼𝐞 𝗏𝐚𝗅𝐢𝖽𝐚𝗍𝐢𝐨𝗇 𝐚𝗇𝖽 𝖻𝗋𝐨𝗐𝗌𝐞𝗋 𝖼𝗁𝐞𝖼𝗄𝗌.
+- `src/` 𝐚𝗇𝖽 `build.mjs`: 𝗋𝐞𝐚𝖽𝐚𝖻𝗅𝐞 𝗌𝐨𝐮𝗋𝖼𝐞 𝐚𝗇𝖽 𝖽𝐞𝗍𝐞𝗋𝗆𝐢𝗇𝐢𝗌𝗍𝐢𝖼 𝖻𝗋𝐨𝗐𝗌𝐞𝗋/𝗆𝐨𝖽𝐮𝗅𝐞 𝖻𝐮𝐢𝗅𝖽.
+
+## 𝗆𝐨𝖽𝐮𝗅𝐞 𝐞𝗑𝐚𝗆𝗉𝗅𝐞
 
 ```javascript
 import {encode, decode, specimen} from './bloom.mjs';
@@ -39,12 +36,12 @@ const bloom = encode(source, {
 console.log(bloom);
 console.log(decode(bloom));
 console.assert(decode(bloom) === source);
-console.log(specimen()); // The original stored sequence, not a random approximation.
+console.log(specimen()); // The exact original stored sequence.
 ```
 
-## Command line
+## 𝖼𝐨𝗆𝗆𝐚𝗇𝖽 𝗅𝐢𝗇𝐞
 
-Tested with Node 22.16.0. No package installation is needed.
+𝗇𝐨 𝗉𝐚𝖼𝗄𝐚𝗀𝐞 𝐢𝗇𝗌𝗍𝐚𝗅𝗅𝐚𝗍𝐢𝐨𝗇 𝐢𝗌 𝗇𝐞𝐞𝖽𝐞𝖽.
 
 ```sh
 printf 'kettle resurrection' | node cli.mjs encode --font bold-script --seed 42
@@ -55,8 +52,12 @@ node --test bloom.test.mjs
 node build.mjs
 ```
 
-## Preservation boundary
+## 𝗄𝐞𝐞𝗉𝐢𝗇𝗀 𝗍𝗁𝐞 𝖻𝗅𝐨𝐨𝗆
 
-Plain text in the strict domain, printable ASCII plus tab and line breaks, round-trips exactly through this codec. Other clusters pass through during encoding, but pre-existing styled symbols can be ambiguous when decoded. Recipe files openly preserve the original source and exact output, avoiding that ambiguity. Recipe validation is a consistency check, not authentication.
+𝗉𝗋𝐢𝗇𝗍𝐚𝖻𝗅𝐞 𝐚𝗌𝖼𝐢𝐢 𝗉𝗅𝐮𝗌 𝗍𝐚𝖻 𝐚𝗇𝖽 𝗅𝐢𝗇𝐞 𝖻𝗋𝐞𝐚𝗄𝗌 𝗋𝐨𝐮𝗇𝖽-𝗍𝗋𝐢𝗉𝗌 𝐞𝗑𝐚𝖼𝗍𝗅𝗒. 𝐨𝗍𝗁𝐞𝗋 𝗌𝐨𝐮𝗋𝖼𝐞 𝖼𝗅𝐮𝗌𝗍𝐞𝗋𝗌 𝗉𝐚𝗌𝗌 𝗍𝗁𝗋𝐨𝐮𝗀𝗁 𝖽𝐮𝗋𝐢𝗇𝗀 𝐞𝗇𝖼𝐨𝖽𝐢𝗇𝗀. 𝖿𝐨𝗋 𝗌𝐨𝐮𝗋𝖼𝐞 𝗍𝗁𝐚𝗍 𝐚𝗅𝗋𝐞𝐚𝖽𝗒 𝖼𝐨𝗇𝗍𝐚𝐢𝗇𝗌 𝗆𝐚𝗍𝗁𝐞𝗆𝐚𝗍𝐢𝖼𝐚𝗅 𝗌𝗍𝗒𝗅𝐢𝗇𝗀, 𝗌𝐚𝗏𝐞 𝐚 𝗋𝐞𝖼𝐢𝗉𝐞: 𝐢𝗍 𝗉𝗋𝐞𝗌𝐞𝗋𝗏𝐞𝗌 𝗍𝗁𝐞 𝐨𝗋𝐢𝗀𝐢𝗇𝐚𝗅 𝗍𝐞𝗑𝗍 𝐚𝗇𝖽 𝐞𝗑𝐚𝖼𝗍 𝖽𝐞𝖼𝐨𝗋𝐚𝗍𝐢𝐨𝗇 𝗍𝐨𝗀𝐞𝗍𝗁𝐞𝗋.
 
-Do not globally normalize exact specimens or remove all combining marks from arbitrary Unicode text. Glyph placement differs across fonts, browsers and applications. The same characters are reproducible; pixel-identical display everywhere is not promised. This is decorative encoding, not encryption or a hidden-payload cipher.
+𝗄𝐞𝐞𝗉 𝗌𝐚𝗏𝐞𝖽 𝗌𝗉𝐞𝖼𝐢𝗆𝐞𝗇𝗌 𝐚𝗌 𝐞𝗑𝐚𝖼𝗍 𝐮𝗇𝐢𝖼𝐨𝖽𝐞, 𝗐𝐢𝗍𝗁𝐨𝐮𝗍 𝗇𝐨𝗋𝗆𝐚𝗅𝐢𝗓𝐚𝗍𝐢𝐨𝗇. 𝗍𝗁𝐞 𝖼𝗁𝐚𝗋𝐚𝖼𝗍𝐞𝗋𝗌 𝗋𝐞𝗉𝐞𝐚𝗍 𝐞𝗑𝐚𝖼𝗍𝗅𝗒; 𝗒𝐨𝐮𝗋 𝖽𝐞𝗏𝐢𝖼𝐞'𝗌 𝖿𝐨𝗇𝗍𝗌 𝗀𝐢𝗏𝐞 𝗍𝗁𝐞𝐢𝗋 𝗆𝐚𝗋𝗄𝗌 𝐚 𝗉𝗅𝐚𝖼𝐞 𝗍𝐨 𝗅𝐚𝗇𝖽. 𝖻𝗅𝐨𝐨𝗆 𝐢𝗌 𝐚 𝖽𝐞𝖼𝐨𝗋𝐚𝗍𝐢𝗏𝐞 𝗍𝐞𝗑𝗍 𝖼𝐨𝖽𝐞𝖼; 𝐢𝗍𝗌 𝗌𝐞𝐞𝖽 𝗌𝐞𝗅𝐞𝖼𝗍𝗌 𝗏𝐢𝗌𝐮𝐚𝗅 𝗏𝐚𝗋𝐢𝐚𝗍𝐢𝐨𝗇.
+
+## 𝐚𝐮𝗍𝗁𝐨𝗋𝗌𝗁𝐢𝗉 𝐚𝗇𝖽 𝗅𝐢𝖼𝐞𝗇𝗌𝐞
+
+𝗅𝐢𝗅𝗒 𝐨𝖿 𝐚𝗌𝗁𝗐𝐨𝐨𝖽, 𝗐𝐢𝗍𝗁 𝐚𝐢-𝐚𝗌𝗌𝐢𝗌𝗍𝐞𝖽 𝐢𝗆𝗉𝗅𝐞𝗆𝐞𝗇𝗍𝐚𝗍𝐢𝐨𝗇 𝐚𝗇𝖽 𝖽𝐞𝗌𝐢𝗀𝗇. [𝗆𝐢𝗍 𝗅𝐢𝖼𝐞𝗇𝗌𝐞𝖽](LICENSE), 𝖼𝐨𝗉𝗒𝗋𝐢𝗀𝗁𝗍 © 2026 `lilyofashwood`. [𝗋𝐞𝖼𝐨𝗏𝐞𝗋𝗒 𝗇𝐨𝗍𝐞𝗌](RECOVERY.md) 𝗉𝗋𝐞𝗌𝐞𝗋𝗏𝐞 𝗍𝗁𝐞 𝗌𝐨𝐮𝗋𝖼𝐞 𝗁𝐢𝗌𝗍𝐨𝗋𝗒. [𝗍𝗁𝐢𝗋𝖽-𝗉𝐚𝗋𝗍𝗒 𝗇𝐨𝗍𝐢𝖼𝐞𝗌](THIRD_PARTY_NOTICES.md) 𝖼𝗋𝐞𝖽𝐢𝗍 𝗍𝗁𝐞 𝗌𝗆𝐚𝗅𝗅 𝗉𝐮𝖻𝗅𝐢𝖼-𝖽𝐨𝗆𝐚𝐢𝗇 𝗀𝐞𝗇𝐞𝗋𝐚𝗍𝐨𝗋 𝗍𝗁𝐚𝗍 𝗆𝐚𝗄𝐞𝗌 𝗌𝐞𝐞𝖽𝐞𝖽 𝗀𝗋𝐨𝗐𝗍𝗁 𝗋𝐞𝗉𝐞𝐚𝗍𝐚𝖻𝗅𝐞.

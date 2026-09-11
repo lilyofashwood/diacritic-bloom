@@ -47,7 +47,7 @@ a{color:var(--mint);text-underline-offset:4px}button,input,select,textarea{font:
       <hr class="muted-rule">
       <label class="check"><input id="frame" type="checkbox">Add the original ornamental frame</label>
       <label class="check"><input id="strict" type="checkbox">Strict ASCII input + line breaks</label>
-      <p class="hint">Up to 12 added marks per styled character. No added hidden payloads, joiners or variation selectors.</p>
+      <p class="hint">Up to 12 added marks per styled character. Above, through and below: choose the weather for every letter.</p>
       <div id="error" role="alert" class="error"></div>
     </section>
     <section class="panel preview" aria-labelledby="preview-heading">
@@ -66,22 +66,22 @@ a{color:var(--mint);text-underline-offset:4px}button,input,select,textarea{font:
       <div class="row"><button id="use-current">Use current bloom</button><button id="copy-plain">Copy decoded words</button></div>
       <label for="decoded" style="margin-top:15px">Decoded text</label><div id="decoded" class="decoded" role="region" aria-label="Decoded text"></div>
       <p id="decode-error" class="error" role="alert"></p>
-      <p class="hint" style="margin-top:12px">This reverses the listed letter families and removes their recognized decorative marks. It leaves ordinary accented letters and emoji alone. Pre-existing mathematical styling cannot be distinguished from styling added here; the JSON recipe preserves the original source.</p>
+      <p class="hint" style="margin-top:12px">Bring the words back through the listed letter families and their decorative marks. Ordinary accented letters and emoji stay intact. For source that already wears mathematical styling, the JSON recipe keeps the original characters and exact decoration together.</p>
     </section>
     <section class="panel microscope" aria-labelledby="microscope-heading">
       <h2 id="microscope-heading"><span class="panel-index">05</span>Glyph microscope</h2><p class="hint">Tap a cluster. The apparent single glyph opens into its constituent code points. First 24 nonblank clusters shown.</p>
       <div id="chips" class="chips" aria-label="Choose a glyph"></div><div id="glyph-big" class="glyph-big" aria-hidden="true"></div><div id="cp-list" class="cp-list"></div>
     </section>
     <section class="panel spec" aria-labelledby="spec-heading">
-      <h2 id="spec-heading"><span class="panel-index">06</span>The small-print spellbook</h2>
+      <h2 id="spec-heading"><span class="panel-index">06</span>The letter and its weather</h2>
       <div class="spec-grid">
         <div><h3>One cluster, separate layers</h3><div class="formula">ASCII letter
   → mapped Unicode letter-body
   + through marks
   + above marks
   + below marks
-  = one decorated text cluster</div><p class="hint" style="margin-top:12px">These are Unicode characters, not a downloadable font. The device's fonts and layout engine decide how the marks actually sit.</p></div>
-        <div><h3>What “reversible” means here</h3><p class="hint">Printable ASCII plus tab and line breaks round-trips exactly through this codec. Other clusters pass through, but original styled symbols can become ambiguous. A validated recipe saves both source and encoded text explicitly.</p><p class="hint">NFC/NFD can reorder or decompose marks. NFKC/NFKD can also erase the styled alphabet. Do not normalize saved specimens when exact code points matter. The decoder is not a general-purpose accent remover and this is not encryption.</p><details><summary>Preservation and rendering notes</summary><p class="hint">The literal original contains U+0344, which canonically decomposes into U+0308 + U+0301, plus U+0340, which decomposes to U+0300. Its U+035C and U+035D marks can visually span neighboring letters. They are preserved in the specimen but excluded from random generation. Screens and apps can display the same sequence differently or clip tall stacks. No pixel-identical rendering is promised.</p></details></div>
+  = one decorated text cluster</div><p class="hint" style="margin-top:12px">Real Unicode characters carry the letter and its weather. Your device's fonts give the marks a place to land.</p></div>
+        <div><h3>Bring every bloom home</h3><p class="hint">Printable ASCII plus tab and line breaks round-trips exactly through this codec. Other clusters pass through, but original styled symbols can become ambiguous. A validated recipe saves both source and encoded text explicitly.</p><p class="hint">NFC/NFD can reorder or decompose marks. NFKC/NFKD can also erase the styled alphabet. Do not normalize saved specimens when exact code points matter. The decoder preserves ordinary accents; recipes retain the original text and its exact decoration.</p><details><summary>Preservation and rendering notes</summary><p class="hint">The literal original contains U+0344, which canonically decomposes into U+0308 + U+0301, plus U+0340, which decomposes to U+0300. Its U+035C and U+035D marks can visually span neighboring letters. They are preserved in the specimen but excluded from random generation. The code points stay exact; each screen's fonts and line spacing shape the visible bloom.</p></details></div>
       </div>
       <div class="sources" style="margin-top:20px">Unicode references: <a href="https://www.unicode.org/faq/char_combmark.html" target="_blank" rel="noopener noreferrer">Combining marks</a><a href="https://www.unicode.org/charts/nameslist/n_1D400.html" target="_blank" rel="noopener noreferrer">Styled alphabets</a><a href="https://www.unicode.org/reports/tr15/" target="_blank" rel="noopener noreferrer">Normalization</a><a href="https://www.unicode.org/reports/tr29/" target="_blank" rel="noopener noreferrer">Grapheme clusters</a></div>
     </section>

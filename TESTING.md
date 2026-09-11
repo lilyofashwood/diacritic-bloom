@@ -33,9 +33,9 @@ Twelve browser checks passed:
 11. No page JavaScript errors or HTTP requests occurred during the tested interactions.
 12. A 390-pixel viewport had no page-level horizontal overflow.
 
-Desktop and narrow-screen screenshots were visually inspected. Browser clipboard permission and OS clipboard integration were not independently tested beyond mocked API behavior and the fallback path. Safari, Firefox and native iOS opening/rendering have not been tested. Identical code points may render differently on other systems.
+Desktop and narrow-screen screenshots were visually inspected in Chromium. Clipboard checks use a mocked API and exercise the manual-selection fallback. Native clipboard integration, Safari, Firefox and iOS are the next platform checks; each device's fonts determine glyph placement.
 
-These tests provide coverage, not a proof that every platform, transformation or arbitrary Unicode source is supported. Refer to the source-domain and normalization contracts in SPEC.md.
+The source-domain and normalization contracts are specified in `SPEC.md`.
 
 ## Optional browser harness
 
