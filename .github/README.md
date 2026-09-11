@@ -37,3 +37,12 @@ node build.mjs
 ## 𝐚𝐮𝗍𝗁𝐨𝗋𝗌𝗁𝐢𝗉 𝐚𝗇𝖽 𝗅𝐢𝖼𝐞𝗇𝗌𝐞
 
 𝗅𝐢𝗅𝗒 𝐨𝖿 𝐚𝗌𝗁𝗐𝐨𝐨𝖽, 𝗐𝐢𝗍𝗁 𝐚𝐢-𝐚𝗌𝗌𝐢𝗌𝗍𝐞𝖽 𝐢𝗆𝗉𝗅𝐞𝗆𝐞𝗇𝗍𝐚𝗍𝐢𝐨𝗇 𝐚𝗇𝖽 𝖽𝐞𝗌𝐢𝗀𝗇. [𝗆𝐢𝗍 𝗅𝐢𝖼𝐞𝗇𝗌𝐞𝖽](../LICENSE), 𝖼𝐨𝗉𝗒𝗋𝐢𝗀𝗁𝗍 © 2026 `lilyofashwood`. [𝗍𝗁𝐢𝗋𝖽-𝗉𝐚𝗋𝗍𝗒 𝗇𝐨𝗍𝐢𝖼𝐞𝗌](../THIRD_PARTY_NOTICES.md) 𝖼𝗋𝐞𝖽𝐢𝗍 𝗍𝗁𝐞 𝗉𝐮𝖻𝗅𝐢𝖼-𝖽𝐨𝗆𝐚𝐢𝗇 𝗀𝐞𝗇𝐞𝗋𝐚𝗍𝐨𝗋 𝐮𝗌𝐞𝖽 𝖿𝐨𝗋 𝗋𝐞𝗉𝐞𝐚𝗍𝐚𝖻𝗅𝐞 𝗏𝐢𝗌𝐮𝐚𝗅 𝗏𝐚𝗋𝐢𝐚𝗍𝐢𝐨𝗇.
+
+<!-- garden-seam:diacritic-bloom:start -->
+<section class="garden-seam" data-garden-seam="diacritic-bloom" aria-label="A seam in the garden">
+<h2>⟡ 𝐚 𝗌𝐞𝐚𝗆 𝐢𝗇 𝗍𝗁𝐞 𝗀𝐚𝗋𝖽𝐞𝗇 ⟡</h2>
+<pre class="garden-seam-wire literal" data-garden-raw data-literal>𝓷͏̍︎⃝͏̥︎⃤͏͗︎҉͏̩︎⃝͏̍𝓸︎⃝͏̩︎⃝͏̍︎⃝͏̩︎⃝͏̎︎҈ ͏̹︎⃞͏͝︎⃞͏̪︎҈͏͆︎⃫͏͓𝓵︎⃒͏͗︎̸͏̪︎⃥͏̽︎⃞͏͈︎⃥𝖾͏̑︎⃥͏̥︎⃤͏̊︎⃤͏̹︎⃞͏̊𝓽︎⃤͏͈︎̸͏̎︎̸͏͓︎⃥͏͝︎҈𝗍͏̪︎⃒͏̽︎⃥͏̹︎⃞͏͗︎⃞͏̳𝖾︎̸͏͗︎⃞͏̩︎⃝͏͗︎⃞͏̹︎⃞𝓻͏͗︎⃝͏͓︎⃞͏̍︎⃞͏̮︎⃝͏͆ ︎⃝͏̹͏̍͏̯𝗈𝗐𝗇𝗌 𝓽𝗁𝖾 𝗋𝖺𝗂𝗇
+𝗇𝓸 𝗋𝗈𝗈𝗍 𝗆𝗎𝗌𝗍 𝗐𝖾𝖺𝗋 𝓪 𝗌𝗂𝗇𝗀𝗅𝖾 𝗇𝖺𝗆𝖾󠅆󠅲󠅥󠅥󠄠󠅴󠅨󠅥󠄠󠅤󠅩󠅡󠅣󠅲󠅩󠅴󠅩󠅣󠅳󠄮󠄠󠅌󠅥󠅴󠄠󠅡󠅮󠅯󠅴󠅨󠅥󠅲󠄠󠅡󠅬󠅰󠅨󠅡󠅢󠅥󠅴󠄠󠅧󠅲󠅯󠅷󠄠󠅡󠄠󠅳󠅥󠅡󠅳󠅯󠅮󠄠󠅯󠅦󠄠󠅩󠅴󠅳󠄠󠅯󠅷󠅮󠄮</pre>
+<p class="garden-seam-hint"><a href="https://lilyofashwood.github.io/font-garden/seams/#diacritic-bloom" aria-label="Unfold this garden seam">𝐮𝗇𝖿𝐨𝗅𝖽 𝗍𝗁𝐞 𝗌𝐞𝐚𝗆 ↗</a></p>
+</section>
+<!-- garden-seam:diacritic-bloom:end -->
